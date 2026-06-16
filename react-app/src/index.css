@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-ink antialiased;
+  }
+}
+
+@layer components {
+  /* Pink gradient pill button, matching the original .main-btn */
+  .main-btn {
+    @apply inline-block rounded-full bg-brand px-8 py-3 font-medium text-white
+           transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ff5cae]
+           hover:shadow-lg hover:shadow-brand/40;
+  }
+  .main-btn-outline {
+    @apply inline-block rounded-full border-2 border-white px-8 py-3 font-medium
+           text-white transition-all duration-300 hover:bg-white hover:text-brand;
+  }
+
+  .section-title {
+    @apply text-3xl font-semibold text-ink sm:text-4xl;
+  }
+
+  /* Hover overlay used on the project / work cards */
+  .work-card {
+    @apply relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/5;
+  }
+  .work-overlay {
+    @apply absolute inset-0 flex flex-col items-center justify-center gap-2
+           bg-gradient-to-t from-black/85 via-black/70 to-black/40 px-6 text-center
+           text-white opacity-0 transition-opacity duration-300;
+  }
+  .work-card:hover .work-overlay {
+    @apply opacity-100;
+  }
+}
