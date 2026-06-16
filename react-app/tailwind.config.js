@@ -36,12 +36,22 @@ export default {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'gradient-x': {
+          '0%, 100%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-12px)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.7s ease-out both',
         'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
         blink: 'blink 1s step-end infinite',
         marquee: 'marquee 30s linear infinite',
+        'gradient-x': 'gradient-x 6s ease infinite',
+        float: 'float 6s ease-in-out infinite',
       },
       container: {
         center: true,

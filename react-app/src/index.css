@@ -19,6 +19,56 @@
   background-size: 44px 44px;
 }
 
+/* Cursor-following glow light (positioned via --x / --y CSS vars from JS) */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  margin: -250px 0 0 -250px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 30;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 60%);
+  transform: translate(var(--x, -1000px), var(--y, -1000px));
+  transition: opacity 0.3s ease;
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background-image: linear-gradient(
+    100deg,
+    #ffffff,
+    #a78bfa,
+    #8b5cf6,
+    #c4b5fd,
+    #ffffff
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Spotlight that follows the cursor across a card (uses --mx / --my) */
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    300px circle at var(--mx) var(--my),
+    rgba(139, 92, 246, 0.18),
+    transparent 70%
+  );
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
 @layer components {
   /* Purple gradient pill button with a soft glow on hover */
   .main-btn {

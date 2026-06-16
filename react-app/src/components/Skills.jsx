@@ -1,5 +1,6 @@
 import { skills } from '../data/content'
 import Reveal from './Reveal'
+import SpotlightCard from './SpotlightCard'
 
 export default function Skills() {
   return (
@@ -16,12 +17,14 @@ export default function Skills() {
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
           {skills.map((skill, i) => (
             <Reveal key={skill.name} delay={(i % 5) * 60}>
-              <div className="neon-card group flex h-full flex-col items-center gap-3 p-6 hover:-translate-y-1">
+              <SpotlightCard className="neon-card group flex h-full flex-col items-center gap-3 overflow-hidden p-6 hover:-translate-y-1">
                 <i
-                  className={`${skill.icon} text-4xl text-gray-400 transition-colors group-hover:text-brand-light`}
+                  className={`${skill.icon} relative text-4xl text-gray-400 transition-colors group-hover:text-brand-light`}
                 />
-                <h4 className="text-sm font-medium text-gray-200">{skill.name}</h4>
-              </div>
+                <h4 className="relative text-sm font-medium text-gray-200">
+                  {skill.name}
+                </h4>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

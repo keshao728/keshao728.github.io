@@ -5,7 +5,21 @@ import Starfield from './Starfield'
 
 export default function Header() {
   const layerRefs = useRef([])
+  const tiltRef = useRef(null)
   const typed = useTypewriter(profile.roles)
+
+  // 3D tilt on the portrait following the cursor within its bounds.
+  function handleTilt(e) {
+    const el = tiltRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    el.style.transform = `perspective(900px) rotateY(${px * 12}deg) rotateX(${-py * 12}deg) scale(1.03)`
+  }
+  function resetTilt() {
+    if (tiltRef.current) tiltRef.current.style.transform = ''
+  }
 
   // Native parallax: move each shape opposite the cursor, scaled by its depth.
   // Replaces the original jQuery parallax.min.js, no dependency needed.
@@ -52,7 +66,7 @@ export default function Header() {
           <div className="animate-fade-up">
             <p className="mono-label mb-4">{'// hello world'}</p>
             <h4 className="mb-3 text-lg font-medium text-brand-light">I&apos;m</h4>
-            <h1 className="mb-4 bg-gradient-to-r from-white via-brand-light to-brand bg-clip-text text-5xl font-bold text-transparent sm:text-6xl lg:text-7xl">
+            <h1 className="gradient-text mb-4 animate-gradient-x text-5xl font-bold sm:text-6xl lg:text-7xl">
               {profile.name}
             </h1>
             {/* Typewriter role line */}
@@ -71,13 +85,18 @@ export default function Header() {
           </div>
 
           <div className="hidden lg:flex lg:justify-center">
-            <div className="relative animate-fade-up">
+            <div
+              className="relative animate-fade-up"
+              onMouseMove={handleTilt}
+              onMouseLeave={resetTilt}
+            >
               {/* Soft purple glow bloom behind the stylized portrait */}
               <div className="absolute -inset-6 rounded-[2rem] bg-brand/25 blur-3xl animate-pulse-glow" />
               <img
+                ref={tiltRef}
                 src="images/banner/porfolio-hero.png"
                 alt="Kelly Shao"
-                className="relative w-80 rounded-2xl ring-1 ring-brand-light/20 lg:w-[26rem]"
+                className="relative w-80 rounded-2xl ring-1 ring-brand-light/20 transition-transform duration-200 ease-out lg:w-[26rem]"
               />
             </div>
           </div>
