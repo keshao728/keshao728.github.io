@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { profile, socials, heroShapes } from '../data/content'
+import { useTypewriter } from '../hooks'
+import Starfield from './Starfield'
 
 export default function Header() {
   const layerRefs = useRef([])
+  const typed = useTypewriter(profile.roles)
 
   // Native parallax: move each shape opposite the cursor, scaled by its depth.
   // Replaces the original jQuery parallax.min.js, no dependency needed.
@@ -23,14 +26,21 @@ export default function Header() {
   return (
     <header
       id="home"
-      className="relative overflow-hidden bg-gradient-to-br from-[#0f0f1e] via-[#1a1a2e] to-[#2a1a4a] pt-36 pb-16 lg:pt-44 lg:pb-24"
+      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-[#0a0a14] via-[#14142a] to-[#251347] pt-32 pb-20 lg:pt-36"
     >
+      {/* Animated constellation backdrop */}
+      <Starfield />
+      {/* Faint grid texture */}
+      <div className="grid-bg pointer-events-none absolute inset-0 opacity-60" />
+      {/* Radial glow */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-brand/20 blur-[120px] animate-pulse-glow" />
+
       {/* Floating parallax shapes */}
       {heroShapes.map((shape, i) => (
         <div
           key={i}
           ref={(el) => (layerRefs.current[i] = el)}
-          className="pointer-events-none absolute z-0 transition-transform duration-200 ease-out"
+          className="pointer-events-none absolute z-0 opacity-70 transition-transform duration-200 ease-out"
           style={shape.style}
         >
           <img src={shape.src} alt="" className="w-16 lg:w-auto" />
@@ -39,26 +49,39 @@ export default function Header() {
 
       <div className="container relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <h4 className="mb-3 text-lg font-medium text-brand-light">Hello, I&apos;m</h4>
-            <h1 className="mb-4 bg-gradient-to-r from-white via-brand-light to-brand bg-clip-text text-4xl font-bold text-transparent sm:text-5xl lg:text-6xl">
+          <div className="animate-fade-up">
+            <p className="mono-label mb-4">{'// hello world'}</p>
+            <h4 className="mb-3 text-lg font-medium text-brand-light">I&apos;m</h4>
+            <h1 className="mb-4 bg-gradient-to-r from-white via-brand-light to-brand bg-clip-text text-5xl font-bold text-transparent sm:text-6xl lg:text-7xl">
               {profile.name}
             </h1>
-            <p className="mb-8 text-lg text-gray-300">{profile.tagline}</p>
-            <a href="#work" className="main-btn">
-              View my Work
-            </a>
+            {/* Typewriter role line */}
+            <p className="mb-8 min-h-[1.75rem] font-mono text-lg text-gray-300">
+              <span className="text-brand-light">&gt;</span> {typed}
+              <span className="ml-0.5 inline-block w-2 animate-blink bg-brand-light align-middle" style={{ height: '1.1em' }} />
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a href="#work" className="main-btn">
+                View my Work
+              </a>
+              <a href="#contact" className="main-btn-outline">
+                Get in Touch
+              </a>
+            </div>
           </div>
 
           <div className="hidden lg:flex lg:justify-center">
-            <div className="relative">
+            <div className="relative animate-fade-up">
               {/* Soft purple glow behind the rounded portrait */}
-              <div className="absolute -inset-4 rounded-3xl bg-brand/30 blur-2xl" />
-              <img
-                src="images/banner/newpfp.webp"
-                alt="Kelly Shao"
-                className="relative w-64 rounded-3xl ring-1 ring-brand-light/30 lg:w-72"
-              />
+              <div className="absolute -inset-4 rounded-3xl bg-brand/30 blur-2xl animate-pulse-glow" />
+              {/* Neon gradient frame */}
+              <div className="relative rounded-3xl bg-gradient-to-br from-brand-light via-brand to-brand-dark p-[2px] shadow-glow">
+                <img
+                  src="images/banner/newpfp.webp"
+                  alt="Kelly Shao"
+                  className="w-64 rounded-3xl lg:w-80"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -79,6 +102,18 @@ export default function Header() {
           ))}
         </div>
       </div>
+
+      {/* Scroll-down indicator */}
+      <a
+        href="#about"
+        aria-label="Scroll to about"
+        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-gray-400 transition-colors hover:text-brand-light lg:flex"
+      >
+        <span className="font-mono text-xs uppercase tracking-widest">scroll</span>
+        <span className="flex h-9 w-5 justify-center rounded-full border border-gray-500 p-1">
+          <span className="h-2 w-1 animate-bounce rounded-full bg-brand-light" />
+        </span>
+      </a>
     </header>
   )
 }

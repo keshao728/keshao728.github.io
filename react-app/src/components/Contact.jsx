@@ -32,16 +32,11 @@ export default function Contact() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.12),transparent_60%)]" />
       <div className="container relative">
         <div className="mb-10 text-center">
+          <p className="mono-label mb-3">{'// contact'}</p>
           <h2 className="section-title">Get In Touch</h2>
-          <p className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-gray-400">
-            <span className="flex items-center gap-2">
-              <i className="fa-solid fa-envelope text-brand-light" />
-              {profile.email}
-            </span>
-            <span className="flex items-center gap-2">
-              <i className="fa-solid fa-phone text-brand-light" />
-              {profile.phone}
-            </span>
+          <p className="mt-3 flex items-center justify-center gap-2 text-gray-400">
+            <i className="fa-solid fa-envelope text-brand-light" />
+            {profile.email}
           </p>
         </div>
 

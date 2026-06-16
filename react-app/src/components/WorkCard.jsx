@@ -2,7 +2,7 @@
 // there's no image), with a hover overlay carrying the title, tools, and links.
 export default function WorkCard({ item }) {
   return (
-    <div className={`work-card ${item.wide ? 'lg:col-span-2' : ''}`}>
+    <div className="work-card h-full">
       {item.image ? (
         <img
           src={item.image}

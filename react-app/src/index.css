@@ -7,8 +7,16 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-[#0f0f1e] font-sans text-gray-200 antialiased;
+    @apply bg-[#0a0a14] font-sans text-gray-200 antialiased;
   }
+}
+
+/* Faint grid texture overlaid on the whole page for a "tech" backdrop */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
 @layer components {
@@ -34,6 +42,18 @@
   .glass-card {
     @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur
            transition-all duration-300;
+  }
+
+  /* Monospace eyebrow label, e.g. <span class="mono-label">// about</span> */
+  .mono-label {
+    @apply font-mono text-sm uppercase tracking-[0.3em] text-brand-light;
+  }
+
+  /* Neon-bordered surface with an animated gradient ring on hover */
+  .neon-card {
+    @apply relative rounded-2xl border border-brand/20 bg-white/[0.03]
+           backdrop-blur transition-all duration-300
+           hover:border-brand/60 hover:shadow-glow;
   }
 
   /* Hover overlay used on the project / work cards */

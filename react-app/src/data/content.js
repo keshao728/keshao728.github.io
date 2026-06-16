@@ -2,11 +2,24 @@
 
 export const profile = {
   name: 'Kelly Shao',
-  tagline: 'A Full Stack Web Developer / Software Engineer',
+  tagline: 'Frontend Engineer & UI/UX Designer',
+  // Rotating phrases for the hero typewriter effect.
+  roles: [
+    'Frontend Engineer',
+    'UI/UX Designer',
+    'SolidJS & TypeScript Developer',
+    'Builder of delightful interfaces',
+  ],
   email: 'kellyshao728@gmail.com',
-  phone: '+1-415-613-2047',
   about:
-    "I am a full-stack software engineer with prior communications experience, currently absorbing as much knowledge as I can to perfect my craft in software development. My specialties include quickly learning new technologies and languages, problem-solving, communication and website optimization.",
+    "I'm a frontend engineer and UI/UX designer at MagicDoor, where I've spent 3+ years crafting the interfaces of a cloud property-management platform - from polished, tenant-facing portals to the internal tooling and CMS that power them. My sweet spot is the place where design meets code: turning ambiguous product ideas into clean, fast, accessible UIs with SolidJS, React, TypeScript and TailwindCSS. I care deeply about the details that make software feel effortless - the micro-interactions, the loading states, the empty screens nobody else thinks about.\n\nWith a Google UX Design certification and a background in communications, I obsess over the user and how an interface feels, not just how it works. Outside work I volunteer as a software engineer with Code for America.",
+  // Quick stats for the about counters
+  stats: [
+    { value: 3, suffix: '+', label: 'Years at MagicDoor' },
+    { value: 6, suffix: '+', label: 'Products shipped' },
+    { value: 15, suffix: '+', label: 'Technologies' },
+    { value: 100, suffix: '%', label: 'Design-obsessed' },
+  ],
 }
 
 export const socials = [
@@ -74,34 +87,42 @@ export const recentWork = [
     title: 'MagicDoor Property Management Portal',
     tools: 'SolidJS, TypeScript, TailwindCSS',
     description:
-      'A cloud-based property management platform designed to streamline operations for property managers.',
+      'The core dashboard property managers live in all day - rent collection, accounting, tenant screening, maintenance, and listings in one fast SolidJS app. Built data-heavy tables, bulk actions, and real-time workflows that keep large portfolios manageable.',
     placeholderIcon: 'fa-solid fa-building-user',
   },
   {
     title: 'MagicDoor Tenant Portal',
     tools: 'SolidStart, TypeScript, TailwindCSS',
     description:
-      'A comprehensive platform enabling tenants to seamlessly view leases, pay rent, submit maintenance requests, and communicate with property managers.',
+      'The tenant side of the platform: pay rent, view and sign leases, submit maintenance requests with photos, and message property managers - all in a mobile-first experience designed to make renting feel modern instead of bureaucratic.',
     placeholderIcon: 'fa-solid fa-house-user',
   },
   {
-    title: 'MagicDoor White Label Company Website',
+    title: 'MagicDoor White Label Website',
     tools: 'SolidStart, TypeScript, TailwindCSS',
     description:
-      'A customizable, white-labeled website solution for property management companies to showcase their brand and property listings.',
+      'A configurable, white-labeled site solution that lets property-management companies spin up a branded web presence with their own logo, colors, and live property listings - their brand, our engine.',
     placeholderIcon: 'fa-solid fa-globe',
   },
   {
     title: 'MagicDoor Internal Portal',
     tools: 'SolidJS, TypeScript, TailwindCSS',
-    description: 'Internal portal for MagicDoor team members.',
+    description:
+      'The internal command center for the MagicDoor team - admin tooling, account management, and operational dashboards that let support and ops resolve issues quickly across every customer account.',
     placeholderIcon: 'fa-solid fa-lock',
+  },
+  {
+    title: 'MagicDoor CMS',
+    tools: 'SolidStart, TypeScript, TailwindCSS',
+    description:
+      'An internal content management system I helped build so the team can manage and publish updates to magicdoor.com without shipping code. Marketing pages, blog posts, and site content are all editable through a custom admin interface, turning what used to be engineering tickets into a few clicks.',
+    placeholderIcon: 'fa-solid fa-pen-ruler',
   },
   {
     title: 'MG Beauty',
     tools: 'Shopify - contract work',
     description:
-      'An online e-commerce store for a local San Francisco shop called MG Hair & Beauty Salon.',
+      'A custom Shopify storefront I built for MG Hair & Beauty Salon, a local San Francisco shop - taking them from in-person-only to a polished online store with product listings, theming, and checkout.',
     image: 'images/work/w-4.png',
     wide: true,
   },

@@ -4,6 +4,15 @@ import { navLinks } from '../data/content'
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('#home')
+  const [scrolled, setScrolled] = useState(false)
+
+  // Glassy background kicks in once scrolled off the hero.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60)
+    onScroll()
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   // Scroll-spy: highlight the nav link for whichever section is in view.
   useEffect(() => {
@@ -17,7 +26,6 @@ export default function Navbar() {
           if (entry.isIntersecting) setActive(`#${entry.target.id}`)
         })
       },
-      // Trigger when a section crosses the upper third of the viewport.
       { rootMargin: '-40% 0px -55% 0px' },
     )
 
@@ -26,37 +34,46 @@ export default function Navbar() {
   }, [])
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 bg-black shadow-[0_0_29px_0_rgba(134,134,134,0.25)]">
-      <div className="container flex items-center justify-between py-5 lg:py-7">
-        <a href="#home" className="flex items-center" onClick={() => setOpen(false)}>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'border-b border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl'
+          : 'border-b border-transparent bg-transparent'
+      }`}
+    >
+      <div className="container flex items-center justify-between py-4">
+        {/* Logo + mono wordmark */}
+        <a
+          href="#home"
+          className="group flex items-center gap-3"
+          onClick={() => setOpen(false)}
+        >
           <img
             src="images/logo.png"
             alt="Kelly Shao logo"
-            className="h-12 w-12 rounded-full"
+            className="h-10 w-10 rounded-full ring-1 ring-brand/40 transition-shadow group-hover:shadow-glow"
           />
+          <span className="hidden font-mono text-sm font-semibold tracking-wider text-white sm:block">
+            kelly<span className="text-brand-light">.shao</span>
+          </span>
         </a>
 
-        {/* Desktop nav */}
+        {/* Desktop nav - floating glass pill */}
         <nav className="hidden lg:block">
-          <ul className="flex items-center gap-8">
-            {navLinks.map((link) => (
+          <ul className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur">
+            {navLinks.map((link, i) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className={`group relative text-sm font-medium uppercase transition-colors hover:text-brand ${
-                    active === link.href ? 'text-brand' : 'text-white'
+                  className={`flex items-center gap-1.5 rounded-full px-4 py-2 font-mono text-sm transition-all ${
+                    active === link.href
+                      ? 'bg-brand/20 text-brand-light shadow-[inset_0_0_0_1px_rgba(167,139,250,0.4)]'
+                      : 'text-gray-400 hover:text-white'
                   }`}
                 >
-                  {/* Vertical pink indicator pinned to the navbar's true top
-                      edge (the link sits below the navbar's vertical center
-                      because the logo is taller, so -top-[42px] reaches the
-                      top). Grows downward via origin-top; active height stops
-                      ~6px short of the link, leaving a gap above the text. */}
-                  <span
-                    className={`absolute -top-[42px] left-1/2 w-[3px] -translate-x-1/2 origin-top bg-brand transition-all duration-300 ease-out group-hover:h-9 ${
-                      active === link.href ? 'h-9' : 'h-0'
-                    }`}
-                  />
+                  <span className="text-xs text-brand/60">
+                    0{i + 1}.
+                  </span>
                   {link.label}
                 </a>
               </li>
@@ -70,27 +87,30 @@ export default function Navbar() {
           aria-label="Toggle navigation"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 lg:hidden"
         >
-          <span className="h-0.5 w-6 rounded bg-white" />
-          <span className="h-0.5 w-6 rounded bg-white" />
-          <span className="h-0.5 w-6 rounded bg-white" />
+          <span className={`h-0.5 w-5 rounded bg-white transition-all ${open ? 'translate-y-2 rotate-45' : ''}`} />
+          <span className={`h-0.5 w-5 rounded bg-white transition-all ${open ? 'opacity-0' : ''}`} />
+          <span className={`h-0.5 w-5 rounded bg-white transition-all ${open ? '-translate-y-2 -rotate-45' : ''}`} />
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <nav className="border-t border-white/10 bg-black lg:hidden">
-          <ul className="container flex flex-col py-2">
-            {navLinks.map((link) => (
+        <nav className="border-t border-white/10 bg-[#0a0a14]/95 backdrop-blur-xl lg:hidden">
+          <ul className="container flex flex-col py-3">
+            {navLinks.map((link, i) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`block py-2 text-sm font-medium transition-colors hover:text-brand ${
-                    active === link.href ? 'text-brand' : 'text-white'
+                  className={`flex items-center gap-3 rounded-lg px-3 py-3 font-mono text-sm transition-colors ${
+                    active === link.href
+                      ? 'bg-brand/15 text-brand-light'
+                      : 'text-gray-300 hover:bg-white/5 hover:text-white'
                   }`}
                 >
+                  <span className="text-xs text-brand/60">0{i + 1}.</span>
                   {link.label}
                 </a>
               </li>
@@ -98,6 +118,6 @@ export default function Navbar() {
           </ul>
         </nav>
       )}
-    </div>
+    </header>
   )
 }
