@@ -72,16 +72,13 @@ export default function Header() {
 
           <div className="hidden lg:flex lg:justify-center">
             <div className="relative animate-fade-up">
-              {/* Soft purple glow behind the rounded portrait */}
-              <div className="absolute -inset-4 rounded-3xl bg-brand/30 blur-2xl animate-pulse-glow" />
-              {/* Neon gradient frame */}
-              <div className="relative rounded-3xl bg-gradient-to-br from-brand-light via-brand to-brand-dark p-[2px] shadow-glow">
-                <img
-                  src="images/banner/newpfp.webp"
-                  alt="Kelly Shao"
-                  className="w-64 rounded-3xl lg:w-80"
-                />
-              </div>
+              {/* Soft purple glow bloom behind the stylized portrait */}
+              <div className="absolute -inset-6 rounded-[2rem] bg-brand/25 blur-3xl animate-pulse-glow" />
+              <img
+                src="images/banner/porfolio-hero.png"
+                alt="Kelly Shao"
+                className="relative w-80 rounded-2xl ring-1 ring-brand-light/20 lg:w-[26rem]"
+              />
             </div>
           </div>
         </div>
