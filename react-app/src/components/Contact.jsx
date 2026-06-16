@@ -28,17 +28,18 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="bg-gray-bg py-20 lg:py-28">
-      <div className="container">
+    <section id="contact" className="relative py-20 lg:py-28">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.12),transparent_60%)]" />
+      <div className="container relative">
         <div className="mb-10 text-center">
           <h2 className="section-title">Get In Touch</h2>
-          <p className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-muted">
+          <p className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-gray-400">
             <span className="flex items-center gap-2">
-              <i className="lni-envelope fa-solid fa-envelope text-brand" />
+              <i className="fa-solid fa-envelope text-brand-light" />
               {profile.email}
             </span>
             <span className="flex items-center gap-2">
-              <i className="lni-phone-handset fa-solid fa-phone text-brand" />
+              <i className="fa-solid fa-phone text-brand-light" />
               {profile.phone}
             </span>
           </p>
@@ -50,21 +51,21 @@ export default function Contact() {
             name="name"
             placeholder="Name"
             required
-            className="w-full rounded-lg border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-gray-200 placeholder-gray-500 outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30"
           />
           <input
             type="email"
             name="email"
             placeholder="Email"
             required
-            className="w-full rounded-lg border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-gray-200 placeholder-gray-500 outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30"
           />
           <textarea
             name="message"
             placeholder="Message"
             rows={5}
             required
-            className="w-full rounded-lg border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/30"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-gray-200 placeholder-gray-500 outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30"
           />
 
           {status === 'success' && (

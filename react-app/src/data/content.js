@@ -11,7 +11,7 @@ export const profile = {
 
 export const socials = [
   { label: 'GitHub', href: 'https://github.com/keshao728', icon: 'fa-brands fa-github' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/keyingshao/', icon: 'lni-linkedin-original' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/keyingshao/', icon: 'fa-brands fa-linkedin-in' },
   { label: 'AngelList', href: 'https://angel.co/u/kelly_shao', icon: 'fa-brands fa-angellist' },
 ]
 
@@ -67,7 +67,7 @@ export const recentWork = [
     description:
       'MagicDoor is transforming property management with our Cloud Property Management Platform. Designed for property managers, our solution simplifies everything from rent collection, tenant screening, maintenance requests, accounting, rental applications, property listings, and much more.',
     image: 'images/work/magicdoor.gif',
-    links: [{ href: 'https://www.magicdoor.com/', icon: 'lni-link' }],
+    links: [{ href: 'https://www.magicdoor.com/', icon: 'fa-solid fa-link' }],
     wide: true,
   },
   {
@@ -116,7 +116,7 @@ export const studentWork = [
     image: 'images/work/w-1.gif',
     links: [
       { href: 'https://github.com/keshao728/Varorant', icon: 'fa-brands fa-github' },
-      { href: 'https://varorant.herokuapp.com/', icon: 'lni-link' },
+      { href: 'https://varorant.herokuapp.com/', icon: 'fa-solid fa-link' },
     ],
     wide: true,
   },
@@ -128,7 +128,7 @@ export const studentWork = [
     image: 'images/work/w-3.png',
     links: [
       { href: 'https://github.com/keshao728/Meowbnb', icon: 'fa-brands fa-github' },
-      { href: 'https://meow-bnb.herokuapp.com/', icon: 'lni-link' },
+      { href: 'https://meow-bnb.herokuapp.com/', icon: 'fa-solid fa-link' },
     ],
   },
   {
@@ -139,7 +139,7 @@ export const studentWork = [
     image: 'images/work/w-2.png',
     links: [
       { href: 'https://github.com/keshao728/Ingenius', icon: 'fa-brands fa-github' },
-      { href: 'https://geniuskelly-fries.onrender.com/', icon: 'lni-link' },
+      { href: 'https://geniuskelly-fries.onrender.com/', icon: 'fa-solid fa-link' },
     ],
   },
 ]

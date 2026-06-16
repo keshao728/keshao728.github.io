@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <header
       id="home"
-      className="relative overflow-hidden bg-gradient-to-br from-[#fff5fb] via-white to-[#f3f0ff] pt-36 pb-16 lg:pt-44 lg:pb-24"
+      className="relative overflow-hidden bg-gradient-to-br from-[#0f0f1e] via-[#1a1a2e] to-[#2a1a4a] pt-36 pb-16 lg:pt-44 lg:pb-24"
     >
       {/* Floating parallax shapes */}
       {heroShapes.map((shape, i) => (
@@ -40,22 +40,26 @@ export default function Header() {
       <div className="container relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <h4 className="mb-3 text-lg font-medium text-brand">Hello, I&apos;m</h4>
-            <h1 className="mb-4 text-4xl font-bold text-ink sm:text-5xl lg:text-6xl">
+            <h4 className="mb-3 text-lg font-medium text-brand-light">Hello, I&apos;m</h4>
+            <h1 className="mb-4 bg-gradient-to-r from-white via-brand-light to-brand bg-clip-text text-4xl font-bold text-transparent sm:text-5xl lg:text-6xl">
               {profile.name}
             </h1>
-            <p className="mb-8 text-lg text-muted">{profile.tagline}</p>
+            <p className="mb-8 text-lg text-gray-300">{profile.tagline}</p>
             <a href="#work" className="main-btn">
               View my Work
             </a>
           </div>
 
-          <div className="hidden lg:block">
-            <img
-              src="images/banner/hero.png"
-              alt="Illustration of Kelly Shao"
-              className="mx-auto w-full max-w-md"
-            />
+          <div className="hidden lg:flex lg:justify-center">
+            <div className="relative">
+              {/* Soft purple glow behind the rounded portrait */}
+              <div className="absolute -inset-4 rounded-3xl bg-brand/30 blur-2xl" />
+              <img
+                src="images/banner/newpfp.webp"
+                alt="Kelly Shao"
+                className="relative w-64 rounded-3xl ring-1 ring-brand-light/30 lg:w-72"
+              />
+            </div>
           </div>
         </div>
 
@@ -68,7 +72,7 @@ export default function Header() {
               target="_blank"
               rel="noreferrer"
               aria-label={s.label}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink shadow-sm ring-1 ring-black/5 transition-all hover:-translate-y-1 hover:bg-brand hover:text-white"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur transition-all hover:-translate-y-1 hover:bg-brand hover:shadow-glow"
             >
               <i className={s.icon} />
             </a>

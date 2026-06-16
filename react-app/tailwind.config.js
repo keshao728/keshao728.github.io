@@ -4,12 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Pulled from the original site's palette
-        brand: '#ff7abd',
-        'brand-dark': '#8122c9',
-        ink: '#32333c',
+        // Purple accent for the futuristic refresh
+        brand: '#8b5cf6',
+        'brand-dark': '#6d28d9',
+        'brand-light': '#a78bfa',
+        ink: '#1a1a2e',
         muted: '#8a8fa3',
-        'gray-bg': '#f1f1f1',
+        'gray-bg': '#f5f4fb',
+      },
+      boxShadow: {
+        glow: '0 0 30px 0 rgba(139, 92, 246, 0.35)',
       },
       fontFamily: {
         sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],

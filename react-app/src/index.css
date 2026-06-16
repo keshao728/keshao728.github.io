@@ -7,34 +7,47 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply font-sans text-ink antialiased;
+    @apply bg-[#0f0f1e] font-sans text-gray-200 antialiased;
   }
 }
 
 @layer components {
-  /* Pink gradient pill button, matching the original .main-btn */
+  /* Purple gradient pill button with a soft glow on hover */
   .main-btn {
-    @apply inline-block rounded-full bg-brand px-8 py-3 font-medium text-white
-           transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ff5cae]
-           hover:shadow-lg hover:shadow-brand/40;
+    @apply inline-block rounded-full bg-gradient-to-r from-brand to-brand-dark
+           px-8 py-3 font-medium text-white transition-all duration-300
+           hover:-translate-y-0.5 hover:shadow-glow;
   }
   .main-btn-outline {
-    @apply inline-block rounded-full border-2 border-white px-8 py-3 font-medium
-           text-white transition-all duration-300 hover:bg-white hover:text-brand;
+    @apply inline-block rounded-full border-2 border-brand-light px-8 py-3
+           font-medium text-white transition-all duration-300
+           hover:bg-brand-light hover:text-ink hover:shadow-glow;
   }
 
+  /* Gradient section heading for the futuristic look */
   .section-title {
-    @apply text-3xl font-semibold text-ink sm:text-4xl;
+    @apply bg-gradient-to-r from-white via-brand-light to-brand bg-clip-text text-3xl
+           font-bold text-transparent sm:text-4xl;
+  }
+
+  /* Glassy card surface reused across dark sections */
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur
+           transition-all duration-300;
   }
 
   /* Hover overlay used on the project / work cards */
   .work-card {
-    @apply relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/5;
+    @apply relative overflow-hidden rounded-2xl ring-1 ring-brand/10
+           shadow-[0_8px_30px_-12px_rgba(109,40,217,0.25)]
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-glow
+           hover:ring-brand/40;
   }
   .work-overlay {
     @apply absolute inset-0 flex flex-col items-center justify-center gap-2
-           bg-gradient-to-t from-black/85 via-black/70 to-black/40 px-6 text-center
-           text-white opacity-0 transition-opacity duration-300;
+           bg-gradient-to-t from-[#1a1a2e]/95 via-brand-dark/70 to-brand/30 px-6
+           text-center text-white opacity-0 backdrop-blur-sm transition-opacity
+           duration-300;
   }
   .work-card:hover .work-overlay {
     @apply opacity-100;

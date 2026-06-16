@@ -18,7 +18,7 @@ export default function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       className="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-[#ff5cae]"
     >
-      <i className="lni-chevron-up fa-solid fa-chevron-up" />
+      <i className="fa-solid fa-chevron-up" />
     </button>
   )
 }

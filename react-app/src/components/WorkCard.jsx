@@ -10,17 +10,17 @@ export default function WorkCard({ item }) {
           className="aspect-video w-full object-cover"
         />
       ) : (
-        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-brand/15 to-brand/5 px-6 text-center">
+        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-brand-dark/40 to-[#1a1a2e] px-6 text-center">
           {item.placeholderIcon && (
-            <i className={`${item.placeholderIcon} text-4xl text-brand`} />
+            <i className={`${item.placeholderIcon} text-4xl text-brand-light`} />
           )}
-          <h4 className="text-lg font-semibold text-ink">{item.title}</h4>
+          <h4 className="text-lg font-semibold text-white">{item.title}</h4>
         </div>
       )}
 
       <div className="work-overlay">
         <h3 className="text-xl font-semibold">{item.title}</h3>
-        {item.tools && <p className="text-sm text-brand">({item.tools})</p>}
+        {item.tools && <p className="text-sm text-brand-light">({item.tools})</p>}
         <p className="text-sm leading-relaxed text-white/85">{item.description}</p>
         {item.links?.length > 0 && (
           <ul className="mt-2 flex gap-3">
