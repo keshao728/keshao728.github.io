@@ -27,6 +27,22 @@
     background: rgba(139, 92, 246, 0.35);
     color: #fff;
   }
+
+  /* accessible keyboard focus - a clear purple ring on interactive elements,
+     shown only for keyboard navigation (not mouse clicks) */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid theme('colors.brand-light');
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* don't show the default outline for mouse users */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 /* Accent scrollbar matching the purple theme - muted so it's not glaring */
