@@ -28,28 +28,24 @@ export const socials = [
   { label: 'AngelList', href: 'https://angel.co/u/kelly_shao', icon: 'fa-brands fa-angellist' },
 ]
 
+// Key skills highlighted as labeled nodes on the hero sphere.
+export const sphereSkills = [
+  'React',
+  'SolidJS',
+  'TypeScript',
+  'TailwindCSS',
+  'JavaScript',
+  'UI/UX',
+  'Figma',
+  'CSS',
+]
+
 export const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#service' },
   { label: 'Projects', href: '#work' },
   { label: 'Contact', href: '#contact' },
-]
-
-// Floating hero shapes (ported from the original parallax layers). `depth`
-// drives how far each shape moves with the mouse — bigger = more movement.
-// `style` positions the shape; `width` matches the original responsive sizing.
-export const heroShapes = [
-  { src: 'images/banner/shape/shape-1.png', depth: 0.1, style: { top: 0, left: 0 } },
-  { src: 'images/banner/shape/shape-2.png', depth: 0.3, style: { top: -18, left: '20%' } },
-  { src: 'images/banner/shape/shape-3.png', depth: 0.4, style: { top: 0, left: '40%' } },
-  { src: 'images/banner/shape/shape-2.png', depth: 0.6, style: { top: 28, right: '7.6%' } },
-  { src: 'images/banner/shape/shape-1.png', depth: 0.2, style: { right: 30, bottom: '35%' } },
-  { src: 'images/banner/shape/shape-4.png', depth: 0.15, style: { top: '44%', left: '13%' } },
-  { src: 'images/banner/shape/shape-5.png', depth: 0.5, style: { left: 30, bottom: 50 } },
-  { src: 'images/banner/shape/shape-3.png', depth: 0.4, style: { left: 90, bottom: 140 } },
-  { src: 'images/banner/shape/shape-6.png', depth: 0.2, style: { left: '50%', bottom: 28 } },
-  { src: 'images/banner/shape/shape-3.png', depth: 0.3, style: { right: 30, bottom: 5 } },
 ]
 
 // `icon` is a Font Awesome / Devicon class name.

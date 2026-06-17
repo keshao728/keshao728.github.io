@@ -1,41 +1,10 @@
-import { useEffect, useRef } from 'react'
-import { profile, socials, heroShapes } from '../data/content'
+import { profile, socials } from '../data/content'
 import { useTypewriter } from '../hooks'
 import Starfield from './Starfield'
+import ParticleSphere from './ParticleSphere'
 
 export default function Header() {
-  const layerRefs = useRef([])
-  const tiltRef = useRef(null)
   const typed = useTypewriter(profile.roles)
-
-  // 3D tilt on the portrait following the cursor within its bounds.
-  function handleTilt(e) {
-    const el = tiltRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const px = (e.clientX - rect.left) / rect.width - 0.5
-    const py = (e.clientY - rect.top) / rect.height - 0.5
-    el.style.transform = `perspective(900px) rotateY(${px * 12}deg) rotateX(${-py * 12}deg) scale(1.03)`
-  }
-  function resetTilt() {
-    if (tiltRef.current) tiltRef.current.style.transform = ''
-  }
-
-  // Native parallax: move each shape opposite the cursor, scaled by its depth.
-  // Replaces the original jQuery parallax.min.js, no dependency needed.
-  useEffect(() => {
-    const onMove = (e) => {
-      const x = e.clientX / window.innerWidth - 0.5
-      const y = e.clientY / window.innerHeight - 0.5
-      layerRefs.current.forEach((el, i) => {
-        if (!el) return
-        const depth = heroShapes[i].depth
-        el.style.transform = `translate(${-x * depth * 100}px, ${-y * depth * 100}px)`
-      })
-    }
-    window.addEventListener('mousemove', onMove)
-    return () => window.removeEventListener('mousemove', onMove)
-  }, [])
 
   return (
     <header
@@ -49,17 +18,6 @@ export default function Header() {
       {/* Radial glow */}
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-brand/20 blur-[120px] animate-pulse-glow" />
 
-      {/* Floating parallax shapes */}
-      {heroShapes.map((shape, i) => (
-        <div
-          key={i}
-          ref={(el) => (layerRefs.current[i] = el)}
-          className="pointer-events-none absolute z-0 opacity-70 transition-transform duration-200 ease-out"
-          style={shape.style}
-        >
-          <img src={shape.src} alt="" className="w-16 lg:w-auto" />
-        </div>
-      ))}
 
       <div className="container relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -76,28 +34,24 @@ export default function Header() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="#work" className="main-btn">
-                View my Work
+                <span>View my Work</span>
+                <i className="fa-solid fa-arrow-right text-xs" />
               </a>
               <a href="#contact" className="main-btn-outline">
-                Get in Touch
+                <i className="fa-solid fa-envelope text-xs" />
+                <span>Get in Touch</span>
               </a>
             </div>
           </div>
 
-          <div className="hidden lg:flex lg:justify-center">
-            <div
-              className="relative animate-fade-up"
-              onMouseMove={handleTilt}
-              onMouseLeave={resetTilt}
-            >
-              {/* Soft purple glow bloom behind the stylized portrait */}
-              <div className="absolute -inset-6 rounded-[2rem] bg-brand/25 blur-3xl animate-pulse-glow" />
-              <img
-                ref={tiltRef}
-                src="images/banner/porfolio-hero.png"
-                alt="Kelly Shao"
-                className="relative w-80 rounded-2xl ring-1 ring-brand-light/20 transition-transform duration-200 ease-out lg:w-[26rem]"
-              />
+          {/* Glowing particle sphere, centered in the right column. Allowed to
+              overflow a touch beyond the column for a bigger presence. */}
+          <div className="hidden lg:block">
+            <div className="relative mx-auto aspect-square w-full max-w-[40rem] lg:-my-16 lg:scale-110">
+              <div className="absolute inset-12 rounded-full bg-brand/25 blur-[110px] animate-pulse-glow" />
+              <div className="relative h-full w-full">
+                <ParticleSphere />
+              </div>
             </div>
           </div>
         </div>

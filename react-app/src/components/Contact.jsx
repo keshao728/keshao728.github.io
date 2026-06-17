@@ -121,10 +121,11 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="main-btn mt-auto disabled:opacity-60"
+                className="main-btn mt-auto justify-center disabled:opacity-60"
                 disabled={status === 'sending'}
               >
-                {status === 'sending' ? 'Sending...' : 'Send Message'}
+                <span>{status === 'sending' ? 'Sending...' : 'Send Message'}</span>
+                <i className={`fa-solid ${status === 'sending' ? 'fa-spinner fa-spin' : 'fa-paper-plane'} text-xs`} />
               </button>
             </form>
           </Reveal>
