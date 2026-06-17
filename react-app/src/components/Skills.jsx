@@ -9,7 +9,7 @@ export default function Skills() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.12),transparent_60%)]" />
       <div className="container relative">
         <Reveal className="mb-12 text-center">
-          <p className="mono-label mb-3">{'// stack'}</p>
+          <p className="mono-label mb-4">my stack</p>
           <h2 className="section-title">Skills</h2>
           <p className="mt-3 text-gray-400">More skills listed on my resume!</p>
         </Reveal>

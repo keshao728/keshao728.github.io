@@ -94,9 +94,16 @@
            transition-all duration-300;
   }
 
-  /* Monospace eyebrow label, e.g. <span class="mono-label">// about</span> */
+  /* Monospace eyebrow label - deliberately muted so the gradient section
+     title below it reads as the primary element. Pair with a small accent
+     bar via the <Eyebrow> component. */
   .mono-label {
-    @apply font-mono text-sm uppercase tracking-[0.3em] text-brand-light;
+    @apply inline-flex items-center gap-2 font-mono text-xs uppercase
+           tracking-[0.3em] text-gray-500;
+  }
+  .mono-label::before {
+    content: '';
+    @apply h-px w-6 bg-brand/50;
   }
 
   /* Neon-bordered surface with an animated gradient ring on hover */
@@ -106,20 +113,4 @@
            hover:border-brand/60 hover:shadow-glow;
   }
 
-  /* Hover overlay used on the project / work cards */
-  .work-card {
-    @apply relative overflow-hidden rounded-2xl ring-1 ring-brand/10
-           shadow-[0_8px_30px_-12px_rgba(109,40,217,0.25)]
-           transition-all duration-300 hover:-translate-y-1 hover:shadow-glow
-           hover:ring-brand/40;
-  }
-  .work-overlay {
-    @apply absolute inset-0 flex flex-col items-center justify-center gap-2
-           bg-gradient-to-t from-[#1a1a2e]/95 via-brand-dark/70 to-brand/30 px-6
-           text-center text-white opacity-0 backdrop-blur-sm transition-opacity
-           duration-300;
-  }
-  .work-card:hover .work-overlay {
-    @apply opacity-100;
-  }
 }

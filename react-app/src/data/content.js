@@ -119,6 +119,14 @@ export const recentWork = [
     placeholderIcon: 'fa-solid fa-pen-ruler',
   },
   {
+    title: 'Unlocked Studios',
+    tools: 'Contract work',
+    description:
+      'A marketing website I designed and built for Unlocked Studios, an independent game development studio - a bold, immersive landing experience to showcase their team and indie game projects.',
+    placeholderIcon: 'fa-solid fa-gamepad',
+    links: [{ href: 'https://www.unlockedstudios.net/', icon: 'fa-solid fa-link' }],
+  },
+  {
     title: 'MG Beauty',
     tools: 'Shopify - contract work',
     description:

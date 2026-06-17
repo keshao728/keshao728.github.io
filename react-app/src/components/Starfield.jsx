@@ -20,13 +20,14 @@ export default function Starfield() {
     }
 
     function seed() {
-      particles = Array.from({ length: COUNT }, (_, i) => ({
-        x: ((i * 97) % 100) / 100 * width,
-        y: ((i * 53) % 100) / 100 * height,
-        // deterministic-ish velocities so we avoid Math.random
-        vx: (((i * 13) % 7) - 3) * 0.06,
-        vy: (((i * 17) % 7) - 3) * 0.06,
-        r: 1 + ((i * 7) % 3) * 0.5,
+      // Scatter particles randomly across the canvas so they start spread out
+      // (a deterministic seed put them on a visible diagonal line on load).
+      particles = Array.from({ length: COUNT }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: 1 + Math.random() * 1.5,
       }))
     }
 

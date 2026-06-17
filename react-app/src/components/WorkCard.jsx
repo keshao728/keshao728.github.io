@@ -1,45 +1,82 @@
-// A single project / work card. Shows the image (or an icon placeholder when
-// there's no image), with a hover overlay carrying the title, tools, and links.
-export default function WorkCard({ item }) {
-  return (
-    <div className="work-card h-full">
-      {item.image ? (
-        <img
-          src={item.image}
-          alt={item.title}
-          className="aspect-video w-full object-cover"
-        />
-      ) : (
-        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-brand-dark/40 to-[#1a1a2e] px-6 text-center">
-          {item.placeholderIcon && (
-            <i className={`${item.placeholderIcon} text-4xl text-brand-light`} />
-          )}
-          <h4 className="text-lg font-semibold text-white">{item.title}</h4>
-        </div>
-      )}
+import SpotlightCard from './SpotlightCard'
 
-      <div className="work-overlay">
-        <h3 className="text-xl font-semibold">{item.title}</h3>
-        {item.tools && <p className="text-sm text-brand-light">({item.tools})</p>}
-        <p className="text-sm leading-relaxed text-white/85">{item.description}</p>
-        {item.links?.length > 0 && (
-          <ul className="mt-2 flex gap-3">
-            {item.links.map((link) => (
-              <li key={link.href}>
+// A project card styled like a code/terminal window. Content stays visible
+// (no hover-to-reveal) so the descriptions and stack are always readable; the
+// image sits in the "window" with a faux title bar, and tools render as chips.
+export default function WorkCard({ item }) {
+  const tools = item.tools ? item.tools.split(',').map((t) => t.trim()) : []
+
+  return (
+    <SpotlightCard className="neon-card group flex h-full flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1">
+      {/* faux window title bar */}
+      <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-3">
+        <span className="h-3 w-3 rounded-full bg-red-400/70" />
+        <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
+        <span className="h-3 w-3 rounded-full bg-green-400/70" />
+        <span className="ml-2 truncate font-mono text-xs text-gray-500">
+          ~/projects/{item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
+        </span>
+      </div>
+
+      {/* media */}
+      <div className="relative overflow-hidden">
+        {item.image ? (
+          <img
+            src={item.image}
+            alt={item.title}
+            className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-brand-dark/30 to-[#12121f]">
+            {item.placeholderIcon && (
+              <i className={`${item.placeholderIcon} text-5xl text-brand-light/80`} />
+            )}
+          </div>
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a14] to-transparent opacity-60" />
+      </div>
+
+      {/* body */}
+      <div className="relative flex flex-1 flex-col p-6">
+        <div className="mb-3 flex items-start justify-between gap-3">
+          <h3 className="text-lg font-semibold text-white transition-colors group-hover:text-brand-light">
+            {item.title}
+          </h3>
+          {item.links?.length > 0 && (
+            <div className="flex shrink-0 gap-2">
+              {item.links.map((link) => (
                 <a
+                  key={link.href}
                   href={link.href}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Project link"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition-colors hover:bg-brand"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-gray-300 transition-all hover:border-brand/50 hover:text-brand-light"
                 >
                   <i className={link.icon} />
                 </a>
-              </li>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-400">
+          {item.description}
+        </p>
+
+        {tools.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {tools.map((tool) => (
+              <span
+                key={tool}
+                className="rounded-full border border-brand/20 bg-brand/10 px-3 py-1 font-mono text-xs text-brand-light"
+              >
+                {tool}
+              </span>
             ))}
-          </ul>
+          </div>
         )}
       </div>
-    </div>
+    </SpotlightCard>
   )
 }

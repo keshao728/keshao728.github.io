@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { profile } from '../data/content'
+import { profile, socials } from '../data/content'
+import Reveal from './Reveal'
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mqkjrjlw'
 
@@ -27,57 +28,107 @@ export default function Contact() {
     }
   }
 
+  const inputClass =
+    'peer w-full rounded-lg border border-white/10 bg-white/5 px-4 pb-2 pt-6 text-gray-200 placeholder-transparent outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30'
+  const labelClass =
+    'pointer-events-none absolute left-4 top-2 font-mono text-xs text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-light'
+
   return (
     <section id="contact" className="relative py-20 lg:py-28">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.12),transparent_60%)]" />
       <div className="container relative">
-        <div className="mb-10 text-center">
-          <p className="mono-label mb-3">{'// contact'}</p>
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="mt-3 flex items-center justify-center gap-2 text-gray-400">
-            <i className="fa-solid fa-envelope text-brand-light" />
-            {profile.email}
-          </p>
+        <Reveal className="mb-12 text-center">
+          <p className="mono-label mb-4">get in touch</p>
+          <h2 className="section-title">Let&apos;s Build Something</h2>
+        </Reveal>
+
+        <div className="grid items-stretch gap-8 lg:grid-cols-2">
+          {/* Left: pitch + links */}
+          <Reveal className="flex">
+            <div className="neon-card flex flex-1 flex-col justify-between gap-8 p-8">
+              <div>
+                <h3 className="mb-4 text-2xl font-semibold text-white">
+                  Have an idea or a role in mind?
+                </h3>
+                <p className="leading-relaxed text-gray-400">
+                  I&apos;m always happy to talk frontend, UI/UX, or interesting
+                  product work. Drop a message and I&apos;ll get back to you - or
+                  reach me directly at the links below.
+                </p>
+              </div>
+
+              <a
+                href={`mailto:${profile.email}`}
+                className="group flex items-center gap-3 font-mono text-sm text-gray-300 transition-colors hover:text-brand-light"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-brand-light transition-colors group-hover:border-brand/50">
+                  <i className="fa-solid fa-envelope" />
+                </span>
+                {profile.email}
+              </a>
+
+              <div>
+                <p className="mb-3 font-mono text-xs uppercase tracking-widest text-gray-500">
+                  find me online
+                </p>
+                <div className="flex gap-3">
+                  {socials.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={s.label}
+                      className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition-all hover:-translate-y-1 hover:border-brand/50 hover:text-brand-light hover:shadow-glow"
+                    >
+                      <i className={s.icon} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Right: form */}
+          <Reveal delay={120} className="flex">
+            <form
+              onSubmit={handleSubmit}
+              className="neon-card flex flex-1 flex-col gap-5 p-8"
+            >
+              <div className="relative">
+                <input id="name" type="text" name="name" placeholder="Name" required className={inputClass} />
+                <label htmlFor="name" className={labelClass}>your name</label>
+              </div>
+              <div className="relative">
+                <input id="email" type="email" name="email" placeholder="Email" required className={inputClass} />
+                <label htmlFor="email" className={labelClass}>your email</label>
+              </div>
+              <div className="relative">
+                <textarea id="message" name="message" placeholder="Message" rows={5} required className={`${inputClass} resize-none`} />
+                <label htmlFor="message" className={labelClass}>your message</label>
+              </div>
+
+              {status === 'success' && (
+                <p className="font-mono text-sm text-green-400">
+                  &gt; message sent. talk soon!
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="font-mono text-sm text-red-400">
+                  &gt; something went wrong - email me directly?
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className="main-btn mt-auto disabled:opacity-60"
+                disabled={status === 'sending'}
+              >
+                {status === 'sending' ? 'Sending...' : 'Send Message'}
+              </button>
+            </form>
+          </Reveal>
         </div>
-
-        <form onSubmit={handleSubmit} className="mx-auto max-w-xl space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-gray-200 placeholder-gray-500 outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-gray-200 placeholder-gray-500 outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30"
-          />
-          <textarea
-            name="message"
-            placeholder="Message"
-            rows={5}
-            required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-gray-200 placeholder-gray-500 outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30"
-          />
-
-          {status === 'success' && (
-            <p className="text-sm font-medium text-green-600">
-              Thanks! Your message has been sent.
-            </p>
-          )}
-          {status === 'error' && (
-            <p className="text-sm font-medium text-red-500">
-              Something went wrong. Please try again or email me directly.
-            </p>
-          )}
-
-          <button type="submit" className="main-btn disabled:opacity-60" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending...' : 'Send Message'}
-          </button>
-        </form>
       </div>
     </section>
   )

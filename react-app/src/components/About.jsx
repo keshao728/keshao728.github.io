@@ -7,7 +7,7 @@ export default function About() {
     <section id="about" className="py-20 lg:py-28">
       <div className="container">
         <Reveal className="mb-12 text-center">
-          <p className="mono-label mb-3">{'// about'}</p>
+          <p className="mono-label mb-4">about me</p>
           <h2 className="section-title">About Me</h2>
         </Reveal>
 

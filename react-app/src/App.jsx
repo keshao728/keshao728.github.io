@@ -3,7 +3,6 @@ import Header from './components/Header'
 import About from './components/About'
 import Skills from './components/Skills'
 import Marquee from './components/Marquee'
-import CallToAction from './components/CallToAction'
 import Work from './components/Work'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -21,7 +20,6 @@ export default function App() {
         <Skills />
         <Marquee />
         <Work />
-        <CallToAction />
         <Contact />
       </main>
       <Footer />
