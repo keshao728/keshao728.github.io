@@ -86,8 +86,9 @@ export default function ParticleSphere() {
     group.add(lines)
 
     // shared focus state + helper (used by both label clicks and node clicks).
-    // focus.target is a target quaternion to slerp toward, or null.
-    const focus = { target: null }
+    // When active, the orb eases from `from` -> `to` over `dur` seconds with an
+    // ease-in-out curve for a smooth, weighted swing.
+    const focus = { active: false, from: new THREE.Quaternion(), to: new THREE.Quaternion(), t0: 0, dur: 1.1 }
     const FRONT = new THREE.Vector3(0, 0, 1)
     // target orientation that rotates this node's direction to face the camera
     function frontRotationFor(base) {
@@ -96,6 +97,15 @@ export default function ParticleSphere() {
         FRONT,
       )
     }
+    // begin a smooth focus animation toward facing `base`
+    function startFocus(base) {
+      focus.from.copy(group.quaternion)
+      focus.to.copy(frontRotationFor(base))
+      focus.t0 = clock.getElapsedTime()
+      focus.active = true
+      vel.x = vel.y = 0
+    }
+    const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2)
 
     // --- skill nodes: bright spheres spread around the globe ---------------
     // spread them out by sampling the fibonacci list at even intervals
@@ -138,9 +148,7 @@ export default function ParticleSphere() {
       elChip.style.transition = 'color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s'
       labelLayer.appendChild(elChip)
 
-      elHit.addEventListener('click', () => {
-        focus.target = frontRotationFor(base)
-      })
+      elHit.addEventListener('click', () => startFocus(base))
 
       // staggered phase so the nodes ping out of sync
       const phase = (k / sphereSkills.length) * Math.PI * 2
@@ -180,7 +188,7 @@ export default function ParticleSphere() {
       dragging = true
       last = { x: e.clientX, y: e.clientY }
       downAt = { x: e.clientX, y: e.clientY }
-      focus.target = null // cancel any in-progress auto-spin on grab
+      focus.active = false // cancel any in-progress focus swing on grab
       el.style.cursor = 'grabbing'
     }
     function onUp(e) {
@@ -193,10 +201,7 @@ export default function ParticleSphere() {
       )
       if (moved < 5 && hoveredNode) {
         const node = skillNodes.find((s) => s.mesh === hoveredNode)
-        if (node) {
-          vel.x = vel.y = 0
-          focus.target = frontRotationFor(node.base)
-        }
+        if (node) startFocus(node.base)
       }
     }
     function onEnter() {
@@ -239,13 +244,11 @@ export default function ParticleSphere() {
       const t = clock.getElapsedTime()
       glow += ((hovering ? 1 : 0) - glow) * 0.08
 
-      if (focus.target && !dragging) {
-        // slerp the orientation so the clicked node swings to the front
-        group.quaternion.slerp(focus.target, 0.12)
-        if (group.quaternion.angleTo(focus.target) < 0.01) {
-          group.quaternion.copy(focus.target)
-          focus.target = null // arrived
-        }
+      if (focus.active && !dragging) {
+        // smooth, time-based eased swing from start -> target orientation
+        const p = Math.min((t - focus.t0) / focus.dur, 1)
+        group.quaternion.slerpQuaternions(focus.from, focus.to, easeInOut(p))
+        if (p >= 1) focus.active = false
       } else if (!dragging) {
         // inertia about the same world axes, decaying
         rotateWorld(Y_AXIS, vel.y)

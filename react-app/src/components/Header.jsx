@@ -43,7 +43,7 @@ export default function Header() {
 
       <div className="container relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:-mt-4 lg:text-left">
             <p
               className={`mono-label mb-4 justify-center lg:justify-start ${enter(0).className}`}
               style={enter(0).style}
