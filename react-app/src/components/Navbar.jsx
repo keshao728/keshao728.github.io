@@ -14,23 +14,38 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scroll-spy: highlight the nav link for whichever section is in view.
+  // Scroll-spy: highlight the section whose top sits just above a line ~33%
+  // down the viewport. Computed on scroll so it stays correct even for short
+  // sections (an IntersectionObserver band can miss those).
   useEffect(() => {
     const sections = navLinks
       .map((l) => document.querySelector(l.href))
       .filter(Boolean)
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`)
-        })
-      },
-      { rootMargin: '-40% 0px -55% 0px' },
-    )
+    const onScroll = () => {
+      // pick the section that covers the line ~40% down the viewport; this
+      // handles tall sections and trailing content (footer) correctly
+      const line = window.innerHeight * 0.4
+      let current = sections[0]?.id
+      for (const s of sections) {
+        const r = s.getBoundingClientRect()
+        if (r.top <= line && r.bottom > line) {
+          current = s.id
+          break
+        }
+        // also advance past sections whose top is already above the line
+        if (r.top <= line) current = s.id
+      }
+      if (current) setActive(`#${current}`)
+    }
 
-    sections.forEach((s) => observer.observe(s))
-    return () => observer.disconnect()
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   return (

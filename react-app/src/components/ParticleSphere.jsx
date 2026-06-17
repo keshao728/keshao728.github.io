@@ -85,6 +85,18 @@ export default function ParticleSphere() {
     )
     group.add(lines)
 
+    // shared focus state + helper (used by both label clicks and node clicks).
+    // focus.target is a target quaternion to slerp toward, or null.
+    const focus = { target: null }
+    const FRONT = new THREE.Vector3(0, 0, 1)
+    // target orientation that rotates this node's direction to face the camera
+    function frontRotationFor(base) {
+      return new THREE.Quaternion().setFromUnitVectors(
+        base.clone().normalize(),
+        FRONT,
+      )
+    }
+
     // --- skill nodes: bright spheres spread around the globe ---------------
     // spread them out by sampling the fibonacci list at even intervals
     const skillNodes = sphereSkills.map((name, k) => {
@@ -108,41 +120,84 @@ export default function ParticleSphere() {
         'absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-light will-change-transform'
       labelLayer.appendChild(elRing)
 
-      // HTML label
-      const elLabel = document.createElement('div')
-      elLabel.textContent = name
-      elLabel.className =
-        'absolute left-0 top-0 whitespace-nowrap rounded-md px-2 py-0.5 font-mono text-[11px] tracking-wide backdrop-blur-sm will-change-transform'
-      // transition color/background/shadow smoothly; transform/opacity are
-      // driven per-frame so they must not be transitioned
-      elLabel.style.transition = 'color 0.2s, background 0.2s, box-shadow 0.2s'
-      labelLayer.appendChild(elLabel)
+      // Large invisible circular HIT AREA centered on the dot - so hovering
+      // *near* the dot (not pixel-perfect on it) triggers hover + click.
+      const elHit = document.createElement('div')
+      elHit.className =
+        'pointer-events-auto absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full will-change-transform'
+      const HIT = 60 // px diameter
+      elHit.style.width = `${HIT}px`
+      elHit.style.height = `${HIT}px`
+      labelLayer.appendChild(elHit)
+
+      // visible chip, floats just above the dot
+      const elChip = document.createElement('div')
+      elChip.textContent = name
+      elChip.className =
+        'pointer-events-none absolute left-0 top-0 -translate-x-1/2 whitespace-nowrap rounded-md px-2 py-0.5 font-mono text-[11px] tracking-wide backdrop-blur-sm will-change-transform'
+      elChip.style.transition = 'color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s'
+      labelLayer.appendChild(elChip)
+
+      elHit.addEventListener('click', () => {
+        focus.target = frontRotationFor(base)
+      })
 
       // staggered phase so the nodes ping out of sync
       const phase = (k / sphereSkills.length) * Math.PI * 2
-      return { name, mesh, base, elLabel, elRing, hl: 0, phase }
+      const node = { name, mesh, base, elHit, elChip, elRing, hl: 0, hover: false, phase }
+      elHit.addEventListener('pointerenter', () => (node.hover = true))
+      elHit.addEventListener('pointerleave', () => (node.hover = false))
+      return node
     })
 
-    // --- interaction -------------------------------------------------------
-    const vel = { x: 0, y: 0 }
+    // --- interaction (quaternion trackball) --------------------------------
+    // Apply drag as rotations about the WORLD x/y axes composed onto the
+    // group's orientation. This keeps drag-left == spin-left no matter where
+    // you grab (Euler angles roll near the poles - this doesn't).
+    const SPEED = 0.006
+    const vel = { x: 0, y: 0 } // angular velocity about world X (pitch) / Y (yaw)
     let dragging = false
     let hovering = false
     let glow = 0
     let last = { x: 0, y: 0 }
+    let downAt = { x: 0, y: 0 } // to tell a click from a drag
     const el = renderer.domElement
     const raycaster = new THREE.Raycaster()
     raycaster.params.Points = { threshold: 0.12 }
     const ndc = new THREE.Vector2(-2, -2)
     let hoveredNode = null
 
+    const X_AXIS = new THREE.Vector3(1, 0, 0)
+    const Y_AXIS = new THREE.Vector3(0, 1, 0)
+    const qTmp = new THREE.Quaternion()
+    // rotate the group about a world axis by `angle`, composed on the left
+    function rotateWorld(axis, angle) {
+      qTmp.setFromAxisAngle(axis, angle)
+      group.quaternion.premultiply(qTmp)
+    }
+
     function onDown(e) {
       dragging = true
       last = { x: e.clientX, y: e.clientY }
+      downAt = { x: e.clientX, y: e.clientY }
+      focus.target = null // cancel any in-progress auto-spin on grab
       el.style.cursor = 'grabbing'
     }
-    function onUp() {
+    function onUp(e) {
       dragging = false
       el.style.cursor = 'grab'
+      // treat as a click on a node if the pointer barely moved
+      const moved = Math.hypot(
+        (e?.clientX ?? downAt.x) - downAt.x,
+        (e?.clientY ?? downAt.y) - downAt.y,
+      )
+      if (moved < 5 && hoveredNode) {
+        const node = skillNodes.find((s) => s.mesh === hoveredNode)
+        if (node) {
+          vel.x = vel.y = 0
+          focus.target = frontRotationFor(node.base)
+        }
+      }
     }
     function onEnter() {
       hovering = true
@@ -156,10 +211,11 @@ export default function ParticleSphere() {
         const dx = e.clientX - last.x
         const dy = e.clientY - last.y
         last = { x: e.clientX, y: e.clientY }
-        vel.y = dx * 0.006
-        vel.x = dy * 0.006
-        group.rotation.y += vel.y
-        group.rotation.x += vel.x
+        // drag horizontally -> rotate about world Y; vertically -> world X
+        vel.y = dx * SPEED
+        vel.x = dy * SPEED
+        rotateWorld(Y_AXIS, vel.y)
+        rotateWorld(X_AXIS, vel.x)
       }
     }
     function onLeave() {
@@ -183,13 +239,21 @@ export default function ParticleSphere() {
       const t = clock.getElapsedTime()
       glow += ((hovering ? 1 : 0) - glow) * 0.08
 
-      if (!dragging) {
-        group.rotation.y += vel.y
-        group.rotation.x += vel.x
+      if (focus.target && !dragging) {
+        // slerp the orientation so the clicked node swings to the front
+        group.quaternion.slerp(focus.target, 0.12)
+        if (group.quaternion.angleTo(focus.target) < 0.01) {
+          group.quaternion.copy(focus.target)
+          focus.target = null // arrived
+        }
+      } else if (!dragging) {
+        // inertia about the same world axes, decaying
+        rotateWorld(Y_AXIS, vel.y)
+        rotateWorld(X_AXIS, vel.x)
         vel.y *= 0.94
         vel.x *= 0.94
         if (Math.abs(vel.y) < 0.0006 && Math.abs(vel.x) < 0.0006) {
-          group.rotation.y += 0.0006 + glow * 0.0012
+          rotateWorld(Y_AXIS, 0.0006 + glow * 0.0012) // gentle idle spin
         }
       }
 
@@ -197,7 +261,6 @@ export default function ParticleSphere() {
       points.material.size = (0.04 + glow * 0.015) * pulse
       points.material.opacity = 0.6 + glow * 0.18
       lines.material.opacity = 0.08 + glow * 0.12
-      group.scale.setScalar(1 + glow * 0.03)
       group.position.y = Math.sin(t * 0.5) * 0.04
 
       // raycast against skill nodes to find the hovered one
@@ -212,7 +275,7 @@ export default function ParticleSphere() {
       //  - focus: hovered node grows + its label gets a solid chip; OTHER
       //    labels dim so the focus is unambiguous (not the whole sphere)
       for (const s of skillNodes) {
-        const isHover = s.mesh === hoveredNode
+        const isHover = s.mesh === hoveredNode || s.hover
         s.hl += ((isHover ? 1 : 0) - s.hl) * 0.18
 
         // project node to screen + get a front/back depth factor
@@ -227,7 +290,7 @@ export default function ParticleSphere() {
         // node mesh: steady dot, grows + brightens on hover. Back-facing nodes
         // stay dimly visible (not hidden) so you can tell there are skill
         // markers all the way around the orb - a cue to rotate it.
-        s.mesh.scale.setScalar(1 + s.hl * 1.8)
+        s.mesh.scale.setScalar(1 + s.hl * 0.8)
         s.mesh.material.opacity = (0.32 + 0.6 * facing) * (1 + s.hl)
 
         // radar "ping" ring around the dot - expands from inside the dot out
@@ -246,26 +309,36 @@ export default function ParticleSphere() {
         s.elRing.style.borderWidth = `${1.5 + (1 - ping) * 1.5}px`
         s.elRing.style.opacity = ringOpacity.toFixed(3)
 
-        // label base opacity from facing, then apply focus dimming
-        let op = facing
-        if (anyFocus) op *= isHover ? 1 : 0.25 // dim non-focused when something is focused
+        // label opacity from facing; hovering forces it visible even on the
+        // back (so you get feedback when hovering a back dot), and a focused
+        // node dims the others
+        let op = Math.max(facing, s.hl)
+        if (anyFocus) op *= isHover ? 1 : 0.25
         op = Math.min(1, op)
 
-        s.elLabel.style.left = `${sx}px`
-        s.elLabel.style.top = `${sy}px`
-        s.elLabel.style.opacity = op.toFixed(3)
-        s.elLabel.style.transform =
-          `translate(-50%, calc(-50% - ${14 + s.hl * 6}px)) scale(${1 + s.hl * 0.22})`
-        s.elLabel.style.zIndex = String(100 + Math.round(camDot * 50) + (isHover ? 200 : 0))
-        // resting vs focused chip styling
+        const z = String(100 + Math.round(camDot * 50) + (isHover ? 200 : 0))
+        // big hit area centered on the dot. Stays interactive even for back
+        // dots (so you can hover/click them) - front dots win overlaps via
+        // their higher z-index (camDot is larger when facing the camera).
+        s.elHit.style.left = `${sx}px`
+        s.elHit.style.top = `${sy}px`
+        s.elHit.style.pointerEvents = 'auto'
+        s.elHit.style.zIndex = z
+        // chip floats above the dot, fades/scales with state
+        s.elChip.style.left = `${sx}px`
+        s.elChip.style.top = `${sy}px`
+        s.elChip.style.opacity = op.toFixed(3)
+        s.elChip.style.transform =
+          `translate(-50%, calc(-100% - ${10 + s.hl * 6}px)) scale(${1 + s.hl * 0.22})`
+        s.elChip.style.zIndex = z
         if (s.hl > 0.04) {
-          s.elLabel.style.color = '#f3efff'
-          s.elLabel.style.background = 'rgba(139,92,246,0.9)'
-          s.elLabel.style.boxShadow = '0 0 16px rgba(139,92,246,0.6)'
+          s.elChip.style.color = '#f3efff'
+          s.elChip.style.background = 'rgba(139,92,246,0.9)'
+          s.elChip.style.boxShadow = '0 0 16px rgba(139,92,246,0.6)'
         } else {
-          s.elLabel.style.color = '#c4b5fd'
-          s.elLabel.style.background = 'rgba(10,10,20,0.55)'
-          s.elLabel.style.boxShadow = 'none'
+          s.elChip.style.color = '#c4b5fd'
+          s.elChip.style.background = 'rgba(10,10,20,0.55)'
+          s.elChip.style.boxShadow = 'none'
         }
       }
       el.style.cursor = hoveredNode ? 'pointer' : dragging ? 'grabbing' : 'grab'
@@ -295,7 +368,8 @@ export default function ParticleSphere() {
       skillNodes.forEach((s) => {
         s.mesh.geometry.dispose()
         s.mesh.material.dispose()
-        s.elLabel.remove()
+        s.elHit.remove()
+        s.elChip.remove()
         s.elRing.remove()
       })
       ptsGeo.dispose()

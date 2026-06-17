@@ -32,7 +32,7 @@ export default function Contact() {
   const inputClass =
     'peer w-full rounded-lg border border-white/10 bg-white/5 px-4 pb-2 pt-6 text-gray-200 placeholder-transparent outline-none backdrop-blur transition focus:border-brand focus:ring-2 focus:ring-brand/30'
   const labelClass =
-    'pointer-events-none absolute left-4 top-2 font-mono text-xs text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-light'
+    'pointer-events-none absolute left-4 top-2 font-mono text-xs text-brand-light/70 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-xs peer-focus:text-brand-light'
 
   return (
     <section id="contact" className="relative py-20 lg:py-28">
