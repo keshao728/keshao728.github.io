@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    
+
     <!--====== Title ======-->
     <title>Kelly Shao Portfolio</title>
 
@@ -127,7 +127,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-5 col-lg-6">
                         <div class="header-content-right">
-                            <h4 class="sub-title">Hello, I’m</h4>
+                            <h4 class="sub-title">Hello, I'm</h4>
                             <h1 class="title">Kelly Shao</h1>
                             <p>A Full Stack Web Developer / Software Engineer</p>
                             <a class="main-btn" href="#work">View my Work</a>
@@ -173,7 +173,6 @@
                 <div class="col-lg-8">
                     <div class="section-title text-center">
                         <h2 class="title">About Me</h2>
-                        <!-- <p>Nunc id dui at sapien faucibus fermentum ut vel diam. Nullam tempus, nunc id efficitur sagittis, urna est ultricies eros, ac porta sem turpis quis leo.</p> -->
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
@@ -185,28 +184,38 @@
                             as much knowledge as I can to perfect my craft in software development. My specialties
                             include quickly learning new technologies and languages, problem-solving, communication and
                             website optimization.</p>
-                        <ul class="clearfix">
-                            <li>
-                                <div class="single-info d-flex align-items-center">
-                                    <div class="info-icon">
-                                        <i class="lni-envelope"></i>
+                        <div class="text-center"> <!-- Add this div with the class of 'text-center' -->
+                            <ul class="clearfix">
+                                <li>
+                                    <div class="single-info d-flex align-items-center justify-content-center">
+                                        <!-- Add 'justify-content-center' here -->
+                                        <div class="info-icon">
+                                            <i class="lni-envelope"></i>
+                                        </div>
+                                        <div class="info-text">
+                                            <p>
+                                                <!-- <span>Email:</span> -->
+                                                kellyshao728@gmail.com
+                                            </p>
+                                        </div>
+                                    </div> <!-- single info -->
+                                </li>
+                                <li>
+                                    <div class="single-info d-flex align-items-center justify-content-center">
+                                        <!-- Add 'justify-content-center' here -->
+                                        <div class="info-icon">
+                                            <i class="lni-phone-handset"></i>
+                                        </div>
+                                        <div class="info-text">
+                                            <p>
+                                                <!-- <span>Phone:</span> -->
+                                                +1-415-613-2047
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="info-text">
-                                        <p><span>Email:</span> kellyshao@gmail.com</p>
-                                    </div>
-                                </div> <!-- single info -->
-                            </li>
-                            <li>
-                                <div class="single-info d-flex align-items-center">
-                                    <div class="info-icon">
-                                        <i class="lni-phone-handset"></i>
-                                    </div>
-                                    <div class="info-text">
-                                        <p><span>Phone:</span> +1-415-613-2047</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div> <!-- Close the 'text-center' div -->
                     </div>
                 </div>
             </div>
@@ -384,7 +393,6 @@
     <!--====== SERVICES PART ENDS ======-->
 
     <!--====== CALL TO ACTION PART START ======-->
-
     <section id="call-to-action" class="call-to-action pt-125 pb-130 bg_cover"
         style="background-image: url(assets/images/call-to-action.jpg)">
         <div class="container">
@@ -392,14 +400,14 @@
                 <div class="col-xl-8 col-lg-9">
                     <div class="call-action-content text-center">
                         <h2 class="action-title">Interested to know me more?</h2>
-                        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua nostrud.</p> -->
                         <ul>
-                            <li><a class="main-btn custom" href="#">download resume</a></li>
+                            <!-- <li><a class="main-btn custom" href="./assets/images/KellyShaoResume.pdf"
+                                    download="Kelly-Shao-Resume">download resume</a></li> -->
                             <li><a class="main-btn custom-2" href="#contact">contact me</a></li>
                         </ul>
                     </div> <!-- call action content -->
                 </div>
+
             </div> <!-- row -->
         </div> <!-- container -->
     </section>
@@ -408,14 +416,148 @@
 
     <!--====== WORK PART START ======-->
 
+    <section id="work" class="work-area pt-125 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-title pb-10">
+                        <h2 class="title">My Recent Work</h2>
+                    </div> <!-- section title -->
+                </div>
+            </div> <!-- row -->
+            <div class="row">
+                <!-- MagicDoor Website - Full width -->
+                <div class="col-lg-12">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image">
+                            <img class="work-img-png" src="assets/images/work/magicdoor.gif" alt="work">
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">MagicDoor - Official Website</h3>
+                                <div class="work-tools">(TailwindCSS, Astro, TypeScript)</div>
+                                <div class="work-des">MagicDoor is transforming property management with our Cloud
+                                    Property
+                                    Management Platform. Designed for property managers, our solution simplifies
+                                    everything
+                                    from rent collection, tenant screening, maintenance requests, accounting, rental
+                                    applications, property listings, and much more.
+                                </div>
+                                <ul>
+                                    <li><a href="https://www.magicdoor.com/" target="_blank" rel="noreferrer"><i
+                                                class="lni-link"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property Management & Tenant Portal - Two columns -->
+                <div class="col-lg-6">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image placeholder-bg">
+                            <div class="placeholder-content">
+                                <i class="fa-solid fa-building-user"></i>
+                                <h4>MagicDoor - Property Management Portal</h4>
+                            </div>
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">MagicDoor Property Management Portal</h3>
+                                <div class="work-tools"> (SolidJS, TypeScript, TailwindCSS)</div>
+                                <div class="work-des">A cloud-based property management platform designed to streamline
+                                    operations for property managers.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image placeholder-bg">
+                            <div class="placeholder-content">
+                                <i class="fa-solid fa-house-user"></i>
+                                <h4>MagicDoor - Tenant Portal</h4>
+                            </div>
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">MagicDoor Tenant Portal</h3>
+                                <div class="work-tools">(SolidStart, TypeScript, TailwindCSS)</div>
+                                <div class="work-des">A comprehensive platform enabling tenants to seamlessly view
+                                    leases, pay rent, submit maintenance requests, and communicate with property
+                                    managers.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- White Label & Internal Portal - Two columns -->
+                <div class="col-lg-6">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image placeholder-bg">
+                            <div class="placeholder-content">
+                                <i class="fa-solid fa-globe"></i>
+                                <h4>MagicDoor - White Label Company Website</h4>
+                            </div>
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">MagicDoor White Label Company Website</h3>
+                                <div class="work-tools"> (SolidStart, TypeScript, TailwindCSS)</div>
+                                <div class="work-des">A customizable, white-labeled website solution for property
+                                    management companies to showcase their brand and property listings.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image placeholder-bg">
+                            <div class="placeholder-content">
+                                <i class="fa-solid fa-lock"></i>
+                                <h4>MagicDoor - Internal Portal</h4>
+                            </div>
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">MagicDoor Internal Portal</h3>
+                                <div class="work-tools">(SolidJS, TypeScript, TailwindCSS)</div>
+                                <div class="work-des">Internal portal for MagicDoor team members</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-work text-center mt-30">
+                <div class="work-image">
+                    <img class="work-img-png" src="assets/images/work/w-4.png" alt="work">
+                </div>
+                <div class="work-overlay">
+                    <div class="work-content">
+                        <h3 class="work-title">MG Beauty</h3>
+                        <div class="work-tools">(Shopify) - contract work</div>
+                        <div class="work-des"> A online e-commerce store for a local San Francisco shop called MG
+                            Hair & Beauty Salon</div>
+
+                    </div>
+                </div>
+                <!-- </div>  -->
+            </div>
+
+
+        </div> <!-- container -->
+    </section>
+
     <section id="work" class="work-area pt-125 pb-130">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="section-title pb-25">
-                        <h2 class="title">My Recent Projects</h2>
-                        <p>Nunc id dui at sapien faucibus fermentum ut vel diam. Nullam tempus, nunc id efficitur
-                            sagittis, urna est ultricies eros, ac porta sem turpis quis leo.</p>
+                        <h2 class="title">Student Projects</h2>
+
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
@@ -435,8 +577,8 @@
                                 user experience
                                 where users may submit tickets or media in the community</div>
                             <ul>
-                                <li><a class="image-popup" href="https://github.com/keshao728/Varorant" target="_blank"
-                                        rel="noreferrer"><i class="fa-brands fa-github"></i></i></a></li>
+                                <li><a href="https://github.com/keshao728/Varorant" target="_blank" rel="noreferrer"><i
+                                            class="fa-brands fa-github"></i></i></a></li>
                                 <li><a href="https://varorant.herokuapp.com/" target="_blank" rel="noreferrer"><i
                                             class="lni-link"></i></a></li>
                             </ul>
@@ -446,6 +588,28 @@
                 </div>
 
                 <div class="single-work-1-wrap">
+                    <div class="single-work-1 text-center mt-30">
+                        <div class="work-image">
+                            <img class="work-img-png" src="assets/images/work/w-3.png" alt="work">
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">Meowbnb</h3>
+                                <div class="work-tools"> (Javascript, CSS3, HTML5, React.js, Redux, Express.js,
+                                    Sequelize, SQLite, Postgres)</div>
+                                <div class="work-des">Inspired by Airbnb, Meowbnb is an full-stack online booking
+                                    platform that
+                                    focuses on short-term homestays for cats</div>
+                                <ul>
+                                    <li><a href="https://github.com/keshao728/Meowbnb" target="_blank"
+                                            rel="noreferrer"><i class="fa-brands fa-github"></i></a>
+                                    </li>
+                                    <li><a href="https://meow-bnb.herokuapp.com/" target="_blank" rel="noreferrer"><i
+                                                class="lni-link"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="single-work-1 text-center mt-30">
                         <div class="work-image">
                             <img class="work-img-png" src="assets/images/work/w-2.png" alt="work">
@@ -458,8 +622,8 @@
                                 <div class="work-des">Inspired by Genius, Ingenius is a full-stack web application that
                                     allows users to provide annotations and interpretations of song lyrics</div>
                                 <ul>
-                                    <li><a class="image-popup" href="https://github.com/keshao728/Ingenius"
-                                            target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i></i></a>
+                                    <li><a href="https://github.com/keshao728/Ingenius" target="_blank"
+                                            rel="noreferrer"><i class="fa-brands fa-github"></i></i></a>
                                     </li>
                                     <li><a href="https://geniuskelly-fries.onrender.com/" target="_blank"
                                             rel="noreferrer"><i class="lni-link"></i></a></li>
@@ -467,40 +631,14 @@
                             </div>
                         </div>
                     </div> <!-- single work -->
-
-
-                    <div class="single-work-1 text-center mt-30">
-                        <div class="work-image">
-                            <img class="work-img-png" src="assets/images/work/w-3.png" alt="work">
-                        </div>
-                        <div class="work-overlay">
-                            <div class="work-content">
-                                <h3 class="work-title">Meowbnb</h3>
-                                <div class="work-tools"> (Javascript, CSS3, HTML5, React.js, Redux, Express.js,
-                                    Sequelize, SQLite, Postgres)</div>
-                                <div class="work-des">Inspired by Airbnb, Meowbnb is an online booking platform that
-                                    focuses on short-term homestays for cats</div>
-                                <ul>
-                                    <li><a class="image-popup" href="https://github.com/keshao728/Meowbnb"
-                                            target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i></a>
-                                    </li>
-                                    <li><a href="https://meow-bnb.herokuapp.com/" target="_blank" rel="noreferrer"><i
-                                                class="lni-link"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+
+
             </div> <!-- row -->
-            <!-- <div class="row">
-        <div class="col-lg-12">
-          <div class="work-more text-center mt-50">
-            <a class="main-btn" href="#">more works</a>
-          </div>
-        </div>
-      </div> -->
+
         </div> <!-- container -->
     </section>
+
 
     <!--====== WORK PART ENDS ======-->
 
@@ -511,44 +649,35 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="section-title text-center pb-25">
+                    <div class="section-title text-center pb-10">
                         <h2 class="title">Get In Touch</h2>
-                        <p>For any full-time work opportunities: open to relocation within the United States</p>
-                        <!-- <div class="row about-me-des">
-              <div class="col-lg-6">
-                <div class="about-content">
-                  <ul class="clearfix">
-                    <li>
-                      <div class="single-info d-flex align-items-center">
-                        <div class="info-text">
-                          <p class="in-touch"><span>Email:</span> kellyshao@gmail.com</p>
-                        </div>
-                      </div>
-                  </ul>
-                </div>
-              </div>
-            </div> -->
+                        <p>
+                            <i class="lni-envelope" style="color: #FFA2DF;"></i> kellyshao728@gmail.com &nbsp;&nbsp;
+                            <i class="lni-phone-handset" style="color: #FFA2DF;"></i> +1-415-613-2047
+                        </p>
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
 
+
+
             <div class="row contact-form-wrap">
                 <div class="col-lg-6">
                     <div class="contact-form pt-30">
-                        <form id="contact-form" action="assets/contact.php">
+                        <form action="https://formspree.io/f/mqkjrjlw" method="POST">
                             <div class="single-form">
                                 <input type="text" name="name" placeholder="Name">
-                            </div> <!-- single form -->
+                            </div>
                             <div class="single-form">
                                 <input type="email" name="email" placeholder="Email">
-                            </div> <!-- single form -->
+                            </div>
                             <div class="single-form">
                                 <textarea name="message" placeholder="Message"></textarea>
-                            </div> <!-- single form -->
+                            </div>
                             <p class="form-message"></p>
                             <div class="single-form submit-button">
                                 <button class="main-btn" type="submit">Send Message</button>
-                            </div> <!-- single form -->
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -569,7 +698,6 @@
                             <a href="index.html">
                                 <img class="footer-logo" src="assets/images/logo.png" alt="Logo">
                             </a>
-                            <!-- <p class="mt-">Thank you for your time!</p> -->
                             <ul>
                                 <li><a href="https://github.com/keshao728" target="_blank" rel="noreferrer"><i
                                             class="fa-brands fa-github"></i></a></li>
@@ -617,6 +745,8 @@
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
 
+    <!--====== Ajax Contact js ======-->
+    <script src="assets/js/ajax-contact.js"></script>
 
     <!--====== Appear js ======-->
     <script src="assets/js/jquery.appear.min.js"></script>
@@ -625,6 +755,8 @@
     <script src="assets/js/scrolling-nav.js"></script>
     <script src="assets/js/jquery.easing.min.js"></script>
 
+    <!--====== Validator js ======-->
+    <script src="assets/js/validator.min.js"></script>
 
     <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>

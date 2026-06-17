@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* always reserve the scrollbar gutter so locking scroll during the
+       preloader doesn't cause a horizontal shift when it's released */
+    scrollbar-gutter: stable;
+  }
+  /* offset anchored scrolling so section titles aren't hidden behind the
+     fixed navbar when navigating via the menu */
+  section[id],
+  header[id] {
+    scroll-margin-top: 5rem;
+  }
+  body {
+    @apply bg-[#0a0a14] font-sans text-gray-200 antialiased;
+    /* never allow sideways scroll - marquee/animated children can otherwise
+       extend the document width on small screens */
+    overflow-x: hidden;
+  }
+  /* themed text selection - keep selection enabled (people copy emails/names),
+     just match it to the purple palette instead of the default browser blue */
+  ::selection {
+    background: rgba(139, 92, 246, 0.35);
+    color: #fff;
+  }
+
+  /* accessible keyboard focus - a clear purple ring on interactive elements,
+     shown only for keyboard navigation (not mouse clicks) */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid theme('colors.brand-light');
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* don't show the default outline for mouse users */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* Accent scrollbar matching the purple theme - muted so it's not glaring */
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-color: #3a2c63 #0a0a14;
+    scrollbar-width: thin;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a14;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a2c63;
+  border: 2px solid #0a0a14;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5b3fa0;
+}
+
+/* Faint grid texture overlaid on the whole page for a "tech" backdrop */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Cursor-following glow light (positioned via --x / --y CSS vars from JS) */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  margin: -250px 0 0 -250px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 30;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 60%);
+  transform: translate(var(--x, -1000px), var(--y, -1000px));
+  transition: opacity 0.3s ease;
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background-image: linear-gradient(
+    100deg,
+    #ffffff,
+    #a78bfa,
+    #8b5cf6,
+    #c4b5fd,
+    #ffffff
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Spotlight that follows the cursor across a card (uses --mx / --my) */
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    300px circle at var(--mx) var(--my),
+    rgba(139, 92, 246, 0.18),
+    transparent 70%
+  );
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+@layer components {
+  /* Primary CTA: sleek filled button with a thin glowing edge. Squared-off
+     corners + subtle sheen for a more "product/terminal" feel than a pill. */
+  .main-btn {
+    @apply relative inline-flex items-center gap-2 overflow-hidden rounded-lg
+           bg-brand px-7 py-3 text-sm font-semibold text-white
+           shadow-[0_0_0_1px_rgba(167,139,250,0.4),0_8px_24px_-8px_rgba(139,92,246,0.7)]
+           transition-all duration-300 hover:-translate-y-0.5
+           hover:bg-brand-dark hover:shadow-glow;
+  }
+  /* moving sheen */
+  .main-btn::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent
+           via-white/25 to-transparent transition-transform duration-700;
+  }
+  .main-btn:hover::after {
+    @apply translate-x-full;
+  }
+
+  /* Secondary CTA: ghost button with a bracketed, terminal-ish frame */
+  .main-btn-outline {
+    @apply inline-flex items-center gap-2 rounded-lg border border-white/15
+           bg-white/5 px-7 py-3 text-sm font-semibold text-gray-200 backdrop-blur
+           transition-all duration-300 hover:-translate-y-0.5
+           hover:border-brand/60 hover:text-white hover:shadow-glow;
+  }
+
+  /* Gradient section heading for the futuristic look */
+  .section-title {
+    @apply bg-gradient-to-r from-white via-brand-light to-brand bg-clip-text text-3xl
+           font-bold text-transparent sm:text-4xl;
+  }
+
+  /* Glassy card surface reused across dark sections */
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur
+           transition-all duration-300;
+  }
+
+  /* Monospace eyebrow label - deliberately muted so the gradient section
+     title below it reads as the primary element. Pair with a small accent
+     bar via the <Eyebrow> component. */
+  .mono-label {
+    @apply inline-flex items-center gap-2 font-mono text-xs uppercase
+           tracking-[0.3em] text-gray-500;
+  }
+  .mono-label::before {
+    content: '';
+    @apply h-px w-6 bg-brand/50;
+  }
+
+  /* Neon-bordered surface with an animated gradient ring on hover */
+  .neon-card {
+    @apply relative rounded-2xl border border-brand/20 bg-white/[0.03]
+           backdrop-blur transition-all duration-300
+           hover:border-brand/60 hover:shadow-glow;
+  }
+
+}
