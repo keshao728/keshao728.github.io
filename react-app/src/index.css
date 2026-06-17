@@ -8,6 +8,10 @@
     /* always reserve the scrollbar gutter so locking scroll during the
        preloader doesn't cause a horizontal shift when it's released */
     scrollbar-gutter: stable;
+    /* clip sideways overflow at the root too - body's overflow-x:hidden
+       doesn't catch overflow contributed at the html/document level (fixed
+       elements, decorative absolute glows that bleed past the viewport) */
+    overflow-x: hidden;
   }
   /* offset anchored scrolling so section titles aren't hidden behind the
      fixed navbar when navigating via the menu */

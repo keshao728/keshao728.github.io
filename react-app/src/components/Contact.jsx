@@ -45,8 +45,8 @@ export default function Contact() {
 
         <div className="grid items-stretch gap-8 lg:grid-cols-2">
           {/* Left: pitch + links */}
-          <Reveal className="flex">
-            <div className="neon-card flex flex-1 flex-col justify-between gap-8 p-8">
+          <Reveal className="flex min-w-0">
+            <div className="neon-card flex w-full min-w-0 flex-1 flex-col justify-between gap-8 p-8">
               <div>
                 <h3 className="mb-4 text-2xl font-semibold text-white">
                   Have an idea or a role in mind?
@@ -85,10 +85,10 @@ export default function Contact() {
           </Reveal>
 
           {/* Right: form */}
-          <Reveal delay={120} className="flex">
+          <Reveal delay={120} className="flex min-w-0">
             <form
               onSubmit={handleSubmit}
-              className="neon-card flex flex-1 flex-col gap-5 p-8"
+              className="neon-card flex w-full min-w-0 flex-1 flex-col gap-5 p-8"
             >
               <div className="relative">
                 <input id="name" type="text" name="name" placeholder="Name" required className={inputClass} />
