@@ -59,7 +59,7 @@ export function useCountUp(target, active, durationMs = 1500) {
 // Reveals an element when it scrolls into view; returns a ref and a boolean.
 // Falls back to immediately-visible when reduced motion is preferred or when
 // IntersectionObserver is unavailable, so content is never stuck hidden.
-export function useReveal({ threshold = 0.15 } = {}) {
+export function useReveal({ threshold = 0 } = {}) {
   const ref = useRef(null)
   const [shown, setShown] = useState(false)
 
@@ -83,18 +83,13 @@ export function useReveal({ threshold = 0.15 } = {}) {
           obs.disconnect()
         }
       },
-      { threshold },
+      // fire as soon as any part scrolls into view, but pull the trigger line
+      // up a little (-12% bottom) so it animates just before fully on screen
+      { threshold, rootMargin: '0px 0px -12% 0px' },
     )
     obs.observe(el)
 
-    // Safety net: if the observer never fires (or fires late), reveal anyway so
-    // content can never get stuck hidden. Short enough to be imperceptible.
-    const fallback = setTimeout(() => setShown(true), 600)
-
-    return () => {
-      obs.disconnect()
-      clearTimeout(fallback)
-    }
+    return () => obs.disconnect()
   }, [threshold])
 
   return [ref, shown]

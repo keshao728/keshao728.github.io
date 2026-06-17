@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { profile, socials } from '../data/content'
+import { socials } from '../data/content'
 import Reveal from './Reveal'
+import CopyEmail from './CopyEmail'
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mqkjrjlw'
 
@@ -57,15 +58,9 @@ export default function Contact() {
                 </p>
               </div>
 
-              <a
-                href={`mailto:${profile.email}`}
-                className="group flex items-center gap-3 font-mono text-sm text-gray-300 transition-colors hover:text-brand-light"
-              >
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-brand-light transition-colors group-hover:border-brand/50">
-                  <i className="fa-solid fa-envelope" />
-                </span>
-                {profile.email}
-              </a>
+              <div className="flex">
+                <CopyEmail />
+              </div>
 
               <div>
                 <p className="mb-3 font-mono text-xs uppercase tracking-widest text-gray-500">

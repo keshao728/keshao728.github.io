@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { profile, socials } from '../data/content'
 import { useTypewriter } from '../hooks'
 import Starfield from './Starfield'
@@ -5,6 +6,27 @@ import ParticleSphere from './ParticleSphere'
 
 export default function Header() {
   const typed = useTypewriter(profile.roles)
+  // hold the entrance animation until the preloader finishes (or after a
+  // short fallback in case the preloader isn't present)
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    const onDone = () => setReady(true)
+    window.addEventListener('preloader:done', onDone)
+    const fallback = setTimeout(() => setReady(true), 2600)
+    return () => {
+      window.removeEventListener('preloader:done', onDone)
+      clearTimeout(fallback)
+    }
+  }, [])
+
+  // entrance: start slightly down + transparent, slide in when ready.
+  // Returns props (className + style) so the delay can be an inline value.
+  const enter = (delay = 0) => ({
+    className: `transition-all duration-700 ease-out ${
+      ready ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+    }`,
+    style: { transitionDelay: ready ? `${delay}ms` : '0ms' },
+  })
 
   return (
     <header
@@ -21,23 +43,40 @@ export default function Header() {
 
       <div className="container relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="animate-fade-up">
-            <p className="mono-label mb-4">{'// hello world'}</p>
-            <h4 className="mb-3 text-lg font-medium text-brand-light">I&apos;m</h4>
-            <h1 className="gradient-text mb-4 animate-gradient-x text-5xl font-bold sm:text-6xl lg:text-7xl">
-              {profile.name}
-            </h1>
-            {/* Typewriter role line */}
-            <p className="mb-8 min-h-[1.75rem] font-mono text-lg text-gray-300">
-              <span className="text-brand-light">&gt;</span> {typed}
-              <span className="ml-0.5 inline-block w-2 animate-blink bg-brand-light align-middle" style={{ height: '1.1em' }} />
+          <div className="text-center lg:text-left">
+            <p
+              className={`mono-label mb-4 justify-center lg:justify-start ${enter(0).className}`}
+              style={enter(0).style}
+            >
+              {'// hello world'}
             </p>
-            <div className="flex flex-wrap gap-4">
-              <a href="#work" className="main-btn">
+            <div className={enter(120).className} style={enter(120).style}>
+              <h4 className="mb-2 text-base font-medium text-brand-light sm:text-lg">I&apos;m</h4>
+              <h1 className="gradient-text mb-4 animate-gradient-x text-[2.75rem] font-bold leading-[1.05] sm:text-6xl lg:text-7xl">
+                {profile.name}
+              </h1>
+            </div>
+            {/* Typewriter role line - height reserved for up to 2 lines so the
+                buttons never shift when a longer phrase wraps */}
+            <p
+              className={`mx-auto mb-8 flex min-h-[3.25rem] max-w-[20rem] items-start justify-center font-mono text-base text-gray-300 sm:min-h-[1.75rem] sm:text-lg lg:mx-0 lg:max-w-none lg:justify-start ${enter(240).className}`}
+              style={enter(240).style}
+            >
+              <span className="mr-1 text-brand-light">&gt;</span>
+              <span>
+                {typed}
+                <span className="ml-0.5 inline-block w-2 animate-blink bg-brand-light align-middle" style={{ height: '1.1em' }} />
+              </span>
+            </p>
+            <div
+              className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start ${enter(360).className}`}
+              style={enter(360).style}
+            >
+              <a href="#work" className="main-btn justify-center">
                 <span>View my Work</span>
                 <i className="fa-solid fa-arrow-right text-xs" />
               </a>
-              <a href="#contact" className="main-btn-outline">
+              <a href="#contact" className="main-btn-outline justify-center">
                 <i className="fa-solid fa-envelope text-xs" />
                 <span>Get in Touch</span>
               </a>
@@ -46,7 +85,7 @@ export default function Header() {
 
           {/* Glowing particle sphere, centered in the right column. Allowed to
               overflow a touch beyond the column for a bigger presence. */}
-          <div className="hidden lg:block">
+          <div className={`hidden lg:block ${enter(300).className}`} style={enter(300).style}>
             <div className="relative mx-auto aspect-square w-full max-w-[40rem] lg:-my-16 lg:scale-110">
               <div className="absolute inset-12 rounded-full bg-brand/25 blur-[110px] animate-pulse-glow" />
               <div className="relative h-full w-full">
@@ -57,7 +96,10 @@ export default function Header() {
         </div>
 
         {/* Social row */}
-        <div className="mt-12 flex gap-4">
+        <div
+          className={`mt-10 flex justify-center gap-4 lg:mt-12 lg:justify-start ${enter(440).className}`}
+          style={enter(440).style}
+        >
           {socials.map((s) => (
             <a
               key={s.label}

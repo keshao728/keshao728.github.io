@@ -16,7 +16,7 @@ export default function Work() {
             <Reveal
               key={item.title}
               delay={(i % 2) * 100}
-              className={item.wide ? 'lg:col-span-2' : ''}
+              className={`min-w-0 ${item.wide ? 'lg:col-span-2' : ''}`}
             >
               <WorkCard item={item} />
             </Reveal>

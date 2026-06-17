@@ -8,10 +8,12 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
 import CursorGlow from './components/CursorGlow'
+import Preloader from './components/Preloader'
 
 export default function App() {
   return (
     <>
+      <Preloader />
       <CursorGlow />
       <Navbar />
       <main>

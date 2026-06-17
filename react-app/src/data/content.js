@@ -12,7 +12,7 @@ export const profile = {
   ],
   email: 'kellyshao728@gmail.com',
   about:
-    "I'm a frontend engineer and UI/UX designer at MagicDoor, where I've spent 3+ years crafting the interfaces of a cloud property-management platform - from polished, tenant-facing portals to the internal tooling and CMS that power them. My sweet spot is the place where design meets code: turning ambiguous product ideas into clean, fast, accessible UIs with SolidJS, React, TypeScript and TailwindCSS. I care deeply about the details that make software feel effortless - the micro-interactions, the loading states, the empty screens nobody else thinks about.\n\nWith a Google UX Design certification and a background in communications, I obsess over the user and how an interface feels, not just how it works. Outside work I volunteer as a software engineer with Code for America.",
+    "I'm a frontend engineer and UI/UX designer at MagicDoor, where I've spent 3+ years crafting the interfaces of a cloud property-management platform - from polished, tenant-facing portals to the internal tooling and CMS that power them. My sweet spot is the place where design meets code: turning ambiguous product ideas into clean, fast, accessible UIs with SolidJS, React, TypeScript and TailwindCSS. I care deeply about the details that make software feel effortless - the micro-interactions, the loading states, the empty screens nobody else thinks about.",
   // Quick stats for the about counters
   stats: [
     { value: 3, suffix: '+', label: 'Years at MagicDoor' },

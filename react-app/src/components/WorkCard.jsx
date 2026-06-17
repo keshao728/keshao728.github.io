@@ -10,10 +10,10 @@ export default function WorkCard({ item }) {
     <SpotlightCard className="neon-card group flex h-full flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1">
       {/* faux window title bar */}
       <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-3">
-        <span className="h-3 w-3 rounded-full bg-red-400/70" />
-        <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
-        <span className="h-3 w-3 rounded-full bg-green-400/70" />
-        <span className="ml-2 truncate font-mono text-xs text-gray-500">
+        <span className="h-3 w-3 shrink-0 rounded-full bg-red-400/70" />
+        <span className="h-3 w-3 shrink-0 rounded-full bg-yellow-400/70" />
+        <span className="h-3 w-3 shrink-0 rounded-full bg-green-400/70" />
+        <span className="ml-2 min-w-0 truncate font-mono text-xs text-gray-500">
           ~/projects/{item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
         </span>
       </div>

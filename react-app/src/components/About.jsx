@@ -1,6 +1,7 @@
 import { profile } from '../data/content'
 import Reveal from './Reveal'
 import Stats from './Stats'
+import CopyEmail from './CopyEmail'
 
 export default function About() {
   return (
@@ -12,25 +13,17 @@ export default function About() {
         </Reveal>
 
         <Reveal className="mx-auto max-w-2xl text-center">
-          <h5 className="mb-4 text-xl font-semibold text-white">
-            Hi There! I&apos;m {profile.name}
+          <h5 className="mb-5 text-xl font-semibold text-white sm:text-2xl">
+            Hi there! I&apos;m {profile.name}
           </h5>
           {profile.about.split('\n\n').map((para, i) => (
-            <p key={i} className="mb-6 leading-relaxed text-gray-400">
+            <p key={i} className="mb-5 leading-7 text-gray-400">
               {para}
             </p>
           ))}
 
-          <div className="flex items-center justify-center">
-            <a
-              href={`mailto:${profile.email}`}
-              className="flex items-center gap-3 text-gray-300 transition-colors hover:text-brand-light"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand/20 text-brand-light">
-                <i className="fa-solid fa-envelope" />
-              </span>
-              {profile.email}
-            </a>
+          <div className="mt-8 flex items-center justify-center">
+            <CopyEmail />
           </div>
         </Reveal>
 

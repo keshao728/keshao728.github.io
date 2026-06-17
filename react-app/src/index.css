@@ -5,10 +5,51 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* always reserve the scrollbar gutter so locking scroll during the
+       preloader doesn't cause a horizontal shift when it's released */
+    scrollbar-gutter: stable;
+  }
+  /* offset anchored scrolling so section titles aren't hidden behind the
+     fixed navbar when navigating via the menu */
+  section[id],
+  header[id] {
+    scroll-margin-top: 5rem;
   }
   body {
     @apply bg-[#0a0a14] font-sans text-gray-200 antialiased;
+    /* never allow sideways scroll - marquee/animated children can otherwise
+       extend the document width on small screens */
+    overflow-x: hidden;
   }
+  /* themed text selection - keep selection enabled (people copy emails/names),
+     just match it to the purple palette instead of the default browser blue */
+  ::selection {
+    background: rgba(139, 92, 246, 0.35);
+    color: #fff;
+  }
+}
+
+/* Accent scrollbar matching the purple theme - muted so it's not glaring */
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-color: #3a2c63 #0a0a14;
+    scrollbar-width: thin;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a14;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a2c63;
+  border: 2px solid #0a0a14;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5b3fa0;
 }
 
 /* Faint grid texture overlaid on the whole page for a "tech" backdrop */

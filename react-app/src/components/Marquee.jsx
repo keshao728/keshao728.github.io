@@ -5,7 +5,10 @@ import { skills } from '../data/content'
 export default function Marquee() {
   const items = [...skills, ...skills]
   return (
-    <div className="relative overflow-hidden border-y border-white/10 bg-white/[0.02] py-6">
+    <div
+      className="relative w-full max-w-full overflow-hidden border-y border-white/10 bg-white/[0.02] py-6"
+      style={{ overflowX: 'clip' }}
+    >
       {/* edge fades */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0a0a14] to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0a0a14] to-transparent" />

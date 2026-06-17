@@ -102,6 +102,12 @@ export default function ParticleSphere() {
       mesh.position.copy(base)
       group.add(mesh)
 
+      // expanding "ping" ring around the dot
+      const elRing = document.createElement('div')
+      elRing.className =
+        'absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-light will-change-transform'
+      labelLayer.appendChild(elRing)
+
       // HTML label
       const elLabel = document.createElement('div')
       elLabel.textContent = name
@@ -112,7 +118,9 @@ export default function ParticleSphere() {
       elLabel.style.transition = 'color 0.2s, background 0.2s, box-shadow 0.2s'
       labelLayer.appendChild(elLabel)
 
-      return { name, mesh, base, elLabel, hl: 0 }
+      // staggered phase so the nodes ping out of sync
+      const phase = (k / sphereSkills.length) * Math.PI * 2
+      return { name, mesh, base, elLabel, elRing, hl: 0, phase }
     })
 
     // --- interaction -------------------------------------------------------
@@ -216,9 +224,27 @@ export default function ParticleSphere() {
         // smooth 0..1 facing: fully visible near front, gone past the rim
         const facing = THREE.MathUtils.clamp((camDot + 0.15) / 0.6, 0, 1)
 
-        // node mesh: brighten + grow on hover, scale dot subtly with facing
+        // node mesh: steady dot, grows + brightens on hover. Back-facing nodes
+        // stay dimly visible (not hidden) so you can tell there are skill
+        // markers all the way around the orb - a cue to rotate it.
         s.mesh.scale.setScalar(1 + s.hl * 1.8)
-        s.mesh.material.opacity = (0.35 + 0.55 * facing) * (1 + s.hl)
+        s.mesh.material.opacity = (0.32 + 0.6 * facing) * (1 + s.hl)
+
+        // radar "ping" ring around the dot - expands from inside the dot out
+        // to a larger circle then fades, signalling an interactive point.
+        // Each node is offset by its phase so they pulse out of sync. Hidden
+        // on the back of the sphere (facing ~0) so no rings get "stuck".
+        const ping = (t * 0.5 + s.phase / (Math.PI * 2)) % 1 // 0..1 loop
+        const ringSize = 10 + ping * 40 // bigger, more apparent expansion
+        // ease-out fade; back nodes keep a faint ping so you can tell there
+        // are interactive markers all the way around the orb
+        const ringOpacity = (1 - ping) * (1 - ping) * (0.25 + 0.75 * facing)
+        s.elRing.style.left = `${sx}px`
+        s.elRing.style.top = `${sy}px`
+        s.elRing.style.width = `${ringSize}px`
+        s.elRing.style.height = `${ringSize}px`
+        s.elRing.style.borderWidth = `${1.5 + (1 - ping) * 1.5}px`
+        s.elRing.style.opacity = ringOpacity.toFixed(3)
 
         // label base opacity from facing, then apply focus dimming
         let op = facing
@@ -270,6 +296,7 @@ export default function ParticleSphere() {
         s.mesh.geometry.dispose()
         s.mesh.material.dispose()
         s.elLabel.remove()
+        s.elRing.remove()
       })
       ptsGeo.dispose()
       lineGeo.dispose()
